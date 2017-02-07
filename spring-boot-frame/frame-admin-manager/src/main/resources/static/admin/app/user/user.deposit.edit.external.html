@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-4 ">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#/dashboard">首页</a></li>
+            <li class="active">用户充值</li>
+        </ul>
+    </div>
+</div>
+
+<div class="content">
+    <div class="main-header">
+        <h2>用户</h2>
+        <em>{{headerTitle}}</em>
+    </div>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="widget widget-focus-enabled">
+                    <div class="widget-header">
+                        <h3><i class="fa fa-table"></i> 用户充值</h3>
+                    </div>
+                    <div class="widget-content" id="collapseOne">
+                        <form class="form-horizontal" name="depositForm" ng-controller="DepositCtrl" ng-submit="deposit()">
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label">用户名</label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">{{params.username}}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label">充值点数<span class="requiredTag">*</span></label>
+                                <div class="col-sm-5" ng-class="{'has-error': depositForm.credits.$invalid && depositForm.credits.$dirty }">
+                                    <input id="credits" type="number" name="credits" class="form-control" ng-model="credits" placeholder="充值点数" ng-pattern="positiveIntReg" required />
+                                </div>
+                                <span ng-show="depositForm.credits.$error.required && depositForm.credits.$dirty" class="error">充值点数不能为空</span>
+                                <span ng-show="depositForm.credits.$error.pattern || depositForm.credits.$error.number && depositForm.credits.$dirty" class="error">输入必须为正整数</span>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="depositForm.$invalid">确定</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

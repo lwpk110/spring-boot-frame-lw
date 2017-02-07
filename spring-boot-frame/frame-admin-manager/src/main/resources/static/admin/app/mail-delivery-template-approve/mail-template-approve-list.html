@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-md-4 ">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#/dashboard">首页</a></li>
+            <li class="active">模板审核</li>
+        </ul>
+    </div>
+</div>
+
+<div class="content">
+
+    <div class="main-content">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="widget widget-focus-enabled" style="height: 680px">
+                	<div class="loading-backdrop" ng-show="loadDivVisible">
+	           	 		<!--[if !(IE)|IE 9]><!-->
+	           	 		<i class="fa fa-spinner fa-3x fa-fw circle" loading></i>
+	           	 		<font class="loading-text">数据加载中...</font>
+	           	 		<!--<![endif]-->
+	           	 		<!--[if IE 8]>
+	           	 		<font class="loading-text">
+	           	 			数据加载中...
+	           	 		</font>
+	           	 		<![endif]--> 
+	           	 	</div>
+                    <div class="widget-header">
+                        <h3><i class="fa fa-table"></i>模板审核列表</h3>
+                        <span style="float: right; margin-top: 8px">{{totalItems}}</span>
+                    </div>
+                    <div class="widget-content"  id="collapseOne">
+                        <div class="dataTable_wrapper" style="height: 550px">
+                            <table class="table table-bordered table-hover">
+                                <tbody id="data-item" class="check-list">
+                                <tr ng-if="!items || items.length == 0">
+                                    <td colspan="7">暂无数据显示</td>
+                                </tr>
+                                <tr ng-repeat="item in items">
+                                    <input style="display: none" ng-model="item.id" />
+                                    <td  ng-click="templateDetails(item)">{{item.name}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="foot-page">
+                            <uib-pagination
+                                    total-items="totalItems"
+                                    ng-model="currentPage"
+                                    max-size="maxSize"
+                                    class="pagination-sm"
+                                    boundary-links="true"
+                                    rotate="true"
+                                    num-pages="numPages"
+                                    items-per-page="itemsPerPage"
+                                    first-text="首页"
+                                    previous-text="上一页"
+                                    next-text="下一页"
+                                    last-text="末页"
+                                    ng-change="pageChanged()">
+                            </uib-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8" ng-show="isHaveTemplate">
+                <div class="panel panel-default" style="height: 680px">
+                    <div class="panel-heading" >
+                        <div>
+                            <span class="template-title">{{itemDetail.template.subject}}</span>
+                        </div>
+                        <div style="height: 32px; margin-top: 8px">
+                            <span style="margin-left: 13px">提交时间: {{itemDetail.lastModifiedDate | date:'yyyy-MM-dd HH:mm'}}</span>
+                            <span style="margin-left: 35px">客户账户: {{itemDetail.user.username}}</span>
+                            <div style="float: right;">
+                                <button  type="button"  class="btn btn-primary btn-md btn-hook" ng-click="approveBtn(itemDetail.id)">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-md btn-hook" ng-click="checkFail(itemDetail.id)">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="templateBody" style="height: 580px; overflow: auto">
+                        {{swapHtml(itemDetail.template.body)}}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

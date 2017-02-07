@@ -1,0 +1,133 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<!-- InstanceBegin template="/Templates/Sentset_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>编辑模板</title>
+</head>
+
+<body>
+
+<article class="main">
+    <div class="container main-content" layout:fragment="content">
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>编辑模板</span>
+            </div>
+        </div>
+
+        <div class="signal-top-bule border-rd-3 margin-b-20 margin-t-20">
+            <i class="fa fa-exclamation-circle"></i>
+            受运营商对邮件政策的影响，邮件模板需通过平台审核后才能用于发送邮件，由此导致不便，敬请谅解！
+            </div>
+
+            <div class="row temp-editor-wapper margin-t-20">
+                <form th:action="${#httpServletRequest.getRequestURI().contains('add')}?@{/user/template/add}:@{/user/template/{id}/edit(id=${template.id})}"
+                      method="post" id="addTemplate">
+                    <div class="row">
+                        <div class="col-xs-2 temp-editor-itemname">模板名称</div>
+                        <div class="col-xs-10">
+                            <input type="text" class="clear-defult-appear input-size-max grey-border border-rd-5"
+                                   maxlength="99"
+                                   placeholder="请输入2~100个字符" id="Temp_name" name="name"
+                                   th:value="${#lists.isEmpty(template)}?'':${template.name}">
+                        </div>
+                    </div>
+
+                    <div class="row margin-t-35">
+                        <div class="col-xs-2 temp-editor-itemname">邮件标题</div>
+                        <div class="col-xs-10">
+                            <input type="text" class="clear-defult-appear input-size-max grey-border border-rd-5"
+                                   maxlength="99" placeholder="请输入2~100个字符"
+                                   id="email_name" name="template.subject"
+                                   th:value="${#lists.isEmpty(template.template)}?'':${template.template.subject}">
+                        </div>
+                    </div>
+
+                    <div class="row margin-t-35">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <ul class="temp-help-list">
+                                <li>
+                                    <a href="http://editor.pho.to/zh/edit/" target="_blank">
+                                        <img src="/img/template/cute.png" alt="">图片编辑
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.tietuku.com/" target="_blank">
+                                        <img src="/img/template/map.png" alt="">图片上传
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="note" target="_blank">
+                                        <img src="/img/template/help.png" alt="">使用帮助
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--编辑器-->
+                    <div class="row margin-t-35">
+                        <div>
+                            <textarea name="myEditor" id="myEditor"></textarea>
+                            <input class="hidden-item" name="template.body" id="tpl_data"
+                                   th:value="${#lists.isEmpty(template.template)}? '':${template.template.body}">
+                            <input class="hidden-item"
+                                   type="text"
+                                   id="sel_temp_id"
+                                   name="systemTemplateId"
+                                   value="">
+                        </div>
+                    </div>
+                </form>
+
+                <!--按钮区-->
+                <div class="row margin-t-35">
+                    <div class="col-xs-offset-2">
+                        <button class="clear-defult-appear button-size-max border-rd-5 blue-button margin-r-40"
+                                id="save_eamil_temp">
+                            <i class="fa fa-save"></i>保存
+                        </button>
+
+                        <button class="clear-defult-appear button-size-max border-rd-5 blue-button"
+                                id="save_preview_temp">
+                            <i class="fa fa-eye"></i>预览
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        <div id="temp_editor_dialog" style="display:none;"></div>
+        </div>
+
+</article>
+
+
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_template_edit})"></script>
+    <script id="temp_list" type="text/template">
+        <ul class="temp-select-list" id="tempSelectList">
+            {@each list as item, index}
+            <li style="width:${imgW}; height:${imgH}; margin-bottom:${imgMB};"
+                data-key="${item.id}">
+                <div class="img-wapper">
+                    <img src="/img/template/portraits/${item.portraits[0]}"
+                         name="light"
+                         alt="">
+                    <img src="/img/template/portraits/${item.portraits[1]}"
+                         alt=""
+                         name="dark"
+                         class="hidden-item">
+                </div>
+                <p>${item.name}</p>
+            </li>
+            {@/each}
+        </ul>
+
+        <p class="temp-select-signal error">请选择模板</p>
+    </script>
+</th:block>
+</body>
+</html>

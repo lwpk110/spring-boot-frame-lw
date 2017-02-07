@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>新建任务成功</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>发送任务</span>
+        </div>
+    </div>
+
+    <div class="mask-sent-status-wapper">
+        <p class="submit-status">
+            <i class="fa fa-check-circle margin-r-10"></i>
+            任务已提交
+        </p>
+
+        <p class="submit-signal margin-t-25">
+            任务已提交，并已保存到“任务管理”文件夹。
+        </p>
+
+        <p class="margin-t-25">
+            <a class="underline margin-r-20" th:href="@{/user/recipient_group/add}">添加收件人</a>
+            <a class="underline" th:href="@{/user/delivery_task/add}">继续新建任务</a>
+        </p>
+
+        <div class="row margin-t-50">
+            <button class="clear-defult-appear border-rd-5 blue-button button-size-max" th:attr="onclick='window.open(\'__@{/user/delivery_task}__\',\'_self\')'">
+                查看任务状态
+            </button>
+        </div>
+
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+</th:block>
+</body>
+</html>

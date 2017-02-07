@@ -1,0 +1,28 @@
+description = 'frame-manager'
+
+dependencies {
+    compile project(':frame-core')
+    compile fileTree(dir: '../libs', include: '*.jar')
+    compile "cn.tendata.cas:tendata-cas-client:${tendataCasClientVersion}"
+    compile "cn.tendata.pay:tendata-pay-client:${tendataPayClientVersion}"
+    compile "org.springframework:spring-webmvc"
+    compile "org.springframework.security:spring-security-web"
+    compile "org.springframework.security:spring-security-config"
+    compile "org.hibernate:hibernate-validator"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate4"
+    compile "org.apache.commons:commons-csv:${commonsCsvVersion}"
+    compile "javax.servlet:javax.servlet-api"
+
+    testCompile "junit:junit"
+    testCompile "org.springframework:spring-test"
+    testCompile "org.mockito:mockito-core"
+    testCompile "org.hamcrest:hamcrest-all"
+    integrationTestCompile "org.springframework.security:spring-security-test"
+    integrationTestCompile "org.dbunit:dbunit:${dbunitVersion}"
+    integrationTestCompile "com.github.springtestdbunit:spring-test-dbunit:${springtestdbunitVersion}"
+    integrationTestCompile "com.jayway.jsonpath:json-path:${jsonPathVersion}"
+    integrationTestCompile "com.jayway.jsonpath:json-path-assert:${jsonPathVersion}"
+    integrationTestCompile "javax.servlet:jstl"
+    integrationTestCompile "org.glassfish:javax.el:${elVersion}"
+}

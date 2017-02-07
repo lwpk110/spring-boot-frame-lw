@@ -1,0 +1,36 @@
+.alert-close{
+    width:32px;
+    height:32px;
+    background: url(../images/alert_mouseout.png) no-repeat right top;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.alert-close:hover{
+    background: url(../images/alert_mouseover.png) no-repeat right top;
+}
+
+.alert-dialog-content{
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    clear:both;
+    padding:20px 0px;
+    margin-bottom:28px; 
+}
+
+.alert-button-wapper{width:auto;height: 28px;position: absolute;left:35px;}
+
+.alert-button-mr{margin-right:30px; }
+
+.alert-button{width:100px;height:27px;appearance:none;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;border:0px;outline: none;cursor: pointer;border-radius:5px;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px; }
+
+.alert-button-ok{background:#23a3da;color:#fff;}
+
+.alert-button-ok:hover{background: #1b84b2; }
+
+.alert-button-cancel{background: #23a3da;color:#fff;}
+
+.alert-button-cancel:hover{background: #1b84b2;}

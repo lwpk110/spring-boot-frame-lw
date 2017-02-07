@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <mail_delivery_channel_nodes id="1" name="focussend01" server_key="FOCUS_SEND" 
+        config_props='{"username":"test1@test.com", "password":"111111"}' disabled="0" channel_id="1" version="0" />
+    <mail_delivery_channel_nodes id="2" name="focussend02" server_key="FOCUS_SEND" 
+        config_props='{"username":"test2@test.com", "password":"111111"}' disabled="0" channel_id="1" version="0" />
+</dataset>

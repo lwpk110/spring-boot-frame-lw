@@ -1,0 +1,126 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="_csrf_name" th:content="${_csrf.parameterName}"/>
+    <title layout:title-pattern="$CONTENT_TITLE_$DECORATOR_TITLE">云邮通_上海腾道tendata-大数据|大数据营销|主动营销|找买家|数据资讯专家|外贸通|海关数据|提单数据|进出口数据|海关编码|分析报告</title>
+    <object layout:include="layout/base :: head-pattern" th:remove="tag"/>
+</head>
+<body>
+<header class="pagehead">
+    <div class="login">
+        <div class="header-width">
+            <div class="col-xs-2">
+                <span class="weclome">欢迎您 </span>
+                <span class="bule-orange" th:name="${#authentication.principal.username}">
+                    <a th:href="@{__${LINK_ACCOUNTS_ROOT}__/user/settings/account_based_info}"
+                                             th:text="(${#authentication.principal.userLevel} == 'INTERNAL')?('演示账号-'+${#authentication.name}):${#authentication.name}">演示账号</a></span>
+            </div>
+            <div class="float-r bule-orange login-color">
+                <a th:if="${#authentication} and (${#authentication.authenticated} == true)" th:href="@{/logout}">注销 </a>|<a href="http://www.tendata.cn/contact.html" target="_blank"> 联系我们</a>
+            </div>
+        </div>
+    </div>
+    <div th:class="'header-width'+' '+ 'banner'" layout:replace="layout/base :: header-pattern">
+
+    </div>
+</header>
+<nav class="mainmenu" layout:include="layout/base :: nav-pattern"></nav>
+<nav class="secmenu">
+    <div class="container"
+         th:with="currentUri=${#httpServletRequest.getRequestURI()},active='menu-item-active menu-item',noActive='menu-item'">
+        <div class="row">
+            <div class="secmenu-col">
+                <div th:class="(${currentUri}==@{/user/} or ${currentUri}==@{/user/index})?${active}:${noActive}">
+                    <a th:href="@{/user/index}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-home"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            首页
+                        </p></a>
+                </div>
+            </div>
+            <div class="secmenu-col">
+                <div th:class="${currentUri.contains('recipient_group')}?${active}:${noActive}">
+                    <a th:href="@{/user/recipient_group}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-group"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            待收件人
+                        </p></a>
+                </div>
+            </div>
+            <div class="secmenu-col">
+                <div th:class="${currentUri.contains('template')}?${active}:${noActive}">
+                    <a th:href="@{/user/template}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-envelope-o"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            邮件模板
+                        </p></a>
+                </div>
+            </div>
+            <div class="secmenu-col">
+                <div th:class="${currentUri.contains('delivery_task')}?${active}:${noActive}">
+                    <a th:href="@{/user/delivery_task}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-file-text"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            任务管理
+                        </p></a>
+                </div>
+            </div>
+            <div class="secmenu-col">
+                <div th:class="${currentUri.contains('delivery_settings')}?${active}:${noActive}">
+                    <a th:href="@{/user/delivery_settings}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-gear"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            发送设置
+                        </p></a>
+                </div>
+            </div>
+            <div class="secmenu-col">
+                <div th:class="${currentUri.contains('account')}?${active}:${noActive}">
+                    <a th:href="@{/user/account/}" class="a-block">
+                        <p class="sec-menu-img">
+                            <i class="fa fa-user"></i>
+                        </p>
+
+                        <p class="sec-menu-word">
+                            账户管理
+                        </p></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<article class="main" layout:include="layout/base :: article-pattern">
+</article>
+<footer class="pagefoot margin-t-30" layout:replace="layout/base :: footer-pattern"></footer>
+<script th:inline="javascript">
+    var env = {
+        contextUri:/*[[@{/}]]*/,
+        userId:/*[[${#authentication.principal.userId}]]*/,
+        password:/*[[${#authentication.principal.attributes.get('password')}]]*/,
+        now:/*[[${#dates.format(#dates.createNow(), 'yyyy/MM/dd HH:mm:ss')}]]*/
+    };
+
+</script>
+<div layout:include="layout/base :: scripts-pattern">
+
+</div>
+</body>
+</html>

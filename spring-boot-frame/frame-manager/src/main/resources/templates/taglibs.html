@@ -1,0 +1,5 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link th:fragment="link (url)" rel="stylesheet" th:href="${url}+'?v=20160224'">
+<script th:fragment="script (url)" th:src="@{/js/require2_1_11.js}" th:attr="data-main=${url}+'.js?v=20160224'"></script>
+</html>

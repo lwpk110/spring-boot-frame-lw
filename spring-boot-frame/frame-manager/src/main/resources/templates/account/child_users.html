@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+
+<head>
+    <meta charset="utf-8">
+    <title>点数分配</title>
+</head>
+
+<body>
+    <div class="container main-content" layout:fragment="content">
+        <!-- InstanceBeginEditable name="Main_Area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>点数分配</span>
+            </div>
+        </div>
+
+        <div class="row free-dots-wapper">
+            <p class="float-l margin-r-20">
+                主账号
+                <span class="main-account-name margin-l-5" th:text="${user.username}">tendatacn</span>
+            </p>
+            <p class="float-l">
+                可分配点数
+                <span class="lookout free-dots margin-l-5" id="free_dots_total" th:text="${user.balance}">47321</span>
+            </p>
+        </div>
+
+        <div class="row child-account-wapper margin-t-5" id="child_account_wapper">
+            <div class="child-account" th:each="user : ${childUsers}">
+                <div class="child-account-item">
+                    <div class="child-headimg">
+                        <div class="headImg-icon"><i class="fa fa-user"></i></div>
+                        <input type="hidden" th:value="${user.userId}">
+                        <div class="child-name">
+                            <span th:text="${user.username}">energy@glual01.es</span>
+                        </div>
+                    </div>
+                    <div class="even-have-dots margin-t-15">
+                        <img th:src="@{/img/dots.png}" alt="" class="margin-r-5">
+                        <span th:text="${user.credits}">218</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+    <th:block layout:fragment="scripts">
+        <script id="dialog_content" type="text/x-handlebars-template">
+            <div class='container-fluid'>
+                <div class="row">
+                    <input type="hidden" id="user-id" value="{{userId}}">
+                    <div class="col-xs-2 child-dots-tit">
+                        分配账号
+                    </div>
+                    <div class="col-xs-7 child-dots-name">
+                        {{childName}}
+                    </div>
+                </div>
+                <div class="row margin-t-5">
+                    <div class="col-xs-2 child-dots-tit">
+                        剩余点数
+                    </div>
+                    <div class="col-xs-7">
+                        <input type="text" class="input-size-big border-rd-3 grey-border" id="free_dots_input" placeholder="请输入子账户的点数" value="{{accountDots}}">
+                    </div>
+                    <div class="col-xs-3 error free-dots-singal hidden-item" id="free_dots_singal">
+                        <i class="fa fa-exclamation-triangle error"></i>子账户点数不能为空！
+                    </div>
+                </div>
+                <div class="row margin-t-5">
+                    <div class="col-xs-10 col-xs-offset-2">
+                        <p class="grey-font">
+                            增加或减少子账号的点数将从主账号的余额中相应扣除或增加。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script th:replace="taglibs :: script (url=@{/js/account_assign_balance})"></script>
+    </th:block>
+</body>
+
+</html>

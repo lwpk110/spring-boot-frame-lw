@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<!-- InstanceBegin template="/Templates/Sentset_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>编辑模板成功</title>
+</head>
+
+<body>
+
+<!----article---->
+<article class="main">
+    <div class="container main-content" layout:fragment="content">
+        <!-- InstanceBeginEditable name="Main_Area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>保存模板成功</span>
+            </div>
+        </div>
+
+        <div class="mask-sent-status-wapper">
+            <p class="submit-status">
+                <i class="fa fa-check-circle margin-r-10"></i>
+                保存成功
+            </p>
+
+            <p class="submit-signal margin-t-25">
+                邮件模板保存成功，并已保存到“我的模板”文件夹，审核预计15分钟内完成。
+            </p>
+
+            <p class="margin-t-25">
+                <a class="underline margin-r-20" th:href="@{/user/template}">进入文件夹</a>
+                <a class="underline" th:href="@{/user/template/add}">继续创建模板</a>
+            </p>
+
+            <div class="row margin-t-50">
+                <button class="clear-defult-appear border-rd-5 blue-button button-size-max" th:attr="onclick='window.open(\'__@{/user/delivery_task/add}__\',\'_self\')'">
+                    新建任务
+                </button>
+            </div>
+
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</article>
+
+<!-- InstanceBeginEditable name="Script_Area" -->
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_template_edit_success})"></script>
+</th:block>
+<!-- InstanceEndEditable -->
+
+</body>
+<!-- InstanceEnd --></html>

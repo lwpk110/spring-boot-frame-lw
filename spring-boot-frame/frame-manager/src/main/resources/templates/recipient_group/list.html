@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<!-- InstanceBegin template="/Templates/Recipients_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>待收件人</title>
+</head>
+
+<body>
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_area" -->
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>待收件人</span>
+        </div>
+        <div class="web-tit-button">
+            <button class="button-size-big blue-button border-rd-5"
+                    onclick="window.open('recipient_group/add?type=upload','_self')">
+                添加收件人
+            </button>
+        </div>
+    </div>
+
+    <div class="row margin-t-10">
+        <!--没有数据时-->
+        <div class="search-result-empyt" th:if="${#lists.isEmpty(groups)}">
+            <i class="fa fa-frown-o"></i>
+
+            <p>你还没有收件人~</p>
+        </div>
+        <!--有数据显示表格-->
+        <div class="search-data-show" th:if="not ${#lists.isEmpty(groups)}">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%"
+                   class="email-tong-table recipients-table">
+                <thead>
+                <tr>
+                    <th width="15%">时 间</th>
+                    <th width="40%">名 称</th>
+                    <th width="15%">数 量</th>
+                    <th width="15%">来 源</th>
+                    <th width="15%"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="group : ${groups}">
+                    <td>
+                        <p>
+                            <span th:text="${#calendars.format(group.createdDate,'yyyy-MM-dd')}">2015-08-04</span>
+                                <span class='grey-font'
+                                      th:text="${#calendars.format(group.createdDate,'HH:mm')}">11:20</span>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="tr-singal-line" th:text="${group.name}">丽车木业——越南展会邀请函</p>
+                    </td>
+                    <td th:text="${group.recipientCollection.recipientCount}">850</td>
+                    <td th:text="${group.source == 'MAIL_SOU'?'邮件搜':'自定义'}">邮件搜</td>
+                    <td>
+                        <div class="col-xs-6 v-middle td-action goPreview" th:attr="recipientGroupId =${group.id}"  >
+                            <i class="fa fa-eye" title="预览"></i>
+                        </div>
+                        <div class="v-middle td-action">
+                            <i class="fa fa-trash delete" title="删除" th:id="${group.id}"></i>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->
+</div>
+
+<!-- InstanceBeginEditable name="Script_area" -->
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_recipient_group})"></script>
+</th:block>
+<!-- InstanceEndEditable -->
+</body>
+<!-- InstanceEnd --></html>

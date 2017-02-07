@@ -1,0 +1,297 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+    <div class="row remainder">
+        <div class="col-xs-2 remainder-money">
+            <h1>剩余点数</h1>
+
+            <h2 class="lookout" th:text="${user.balance}">47321</h2>
+        </div>
+        <div class="col-xs-8">
+            <div class="row">
+                <div class="float-l margin-r-15">
+                    <button class="button-size-normal blue-button clear-defult-appear border-rd-5" id="buy">
+                        购 买
+                    </button>
+                </div>
+                <div class="float-l">
+                    <a th:href="@{/user/account/deposits}" class="underline"> 查看 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-t-15">
+        <div class="col-xs-8 step-wapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <img th:src="@{/img/index_step.png}" width="105" height="590" alt="">
+                    </div>
+                    <div class="col-xs-10 step-item-wapper">
+                        <ul>
+                            <li id="setsenter_status">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-9 step-item-detail">
+                                            <div class="step-item-tit">
+                                                <h1>设置发件人&nbsp;&nbsp;</h1>
+
+                                                <h2 class="lookout"><i class="fa fa-lightbulb-o lookout"></i>
+                                                    设置默认发件人昵称和邮箱 </h2>
+                                            </div>
+                                            <div class="step-item-content">
+                                                <!--设置状态显示-->
+                                                <div class="step-item-hasrecord" th:if="${deliverySettings}!=null"
+                                                     th:object="${deliverySettings.deliverySettings}">
+                                                    <p>
+                                                        默认发件人： <span th:text="*{senderName}">腾道客服TENDATA</span>
+                                                    </p>
+
+                                                    <p>
+                                                        发件人邮箱： <span  th:if="${deliverySettings.deliverySettings.agentSend == true}"
+                                                                      th:text="虚拟邮箱" >tendatacn@tendata.cn</span>
+                                                                     <span  th:if="${deliverySettings.deliverySettings.agentSend == false}"
+                                                                           th:text="*{senderEmail}" >tendatacn@tendata.cn</span>
+                                                    </p>
+                                                </div>
+                                                <!--未设置状态显示-->
+                                                <div class="step-item-empty" th:if="${deliverySettings}==null">
+                                                    <div>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    </div>
+                                                    <div>
+                                                        你还没设置发件人哦，快去“设置”吧~
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-item-button">
+                                                <button class="button-size-min blue-button border-rd-10"
+                                                        th:onclick="'window.open(\'__@{/user/delivery_settings}__\',\'_self\')'">
+                                                    <i class="fa fa-gear"></i>设置
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 step-item-bgimg">
+                                            <i class="fa fa-gear"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li id="addrecipients_status">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-9 step-item-detail">
+                                            <div class="step-item-tit">
+                                                <h1>添加收件人&nbsp;&nbsp;</h1>
+
+                                                <h2 class="lookout"><i class="fa fa-lightbulb-o lookout"></i> 要发送的客户邮箱
+                                                </h2>
+                                            </div>
+                                            <div class="step-item-content">
+                                                <!--设置状态显示-->
+                                                <div class="step-item-hasrecord" th:if="${groupCount>0}">
+                                                    <p>
+                                                        待收件人： <span th:text="${recipientCount}+' '">3781</span>个
+                                                    </p>
+
+                                                    <p>
+                                                        收件人组： <span th:text="${groupCount}+' '">4</span>个
+                                                    </p>
+                                                </div>
+                                                <!--未设置状态显示-->
+                                                <div class="step-item-empty" th:if="${groupCount==0}">
+                                                    <div>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    </div>
+                                                    <div>
+                                                        你还没有收件人哦，快去“添加”吧~
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-item-button">
+                                                <button class="button-size-min blue-button border-rd-10"
+                                                        onclick="window.open('recipient_group/add','_self')">
+                                                    <i class="fa fa-plus"></i>添加
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 step-item-bgimg">
+                                            <i class="fa fa-group"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li id="creatTemp_status">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-9 step-item-detail">
+                                            <div class="step-item-tit">
+                                                <h1>创建模板&nbsp;&nbsp;</h1>
+
+                                                <h2 class="lookout"><i class="fa fa-lightbulb-o lookout"></i> 发送邮件的标题和内容
+                                                </h2>
+                                            </div>
+                                            <div class="step-item-content">
+                                                <!--设置状态显示-->
+                                                <div class="step-item-hasrecord" th:if="${tplCount>0}">
+                                                    <p>
+                                                        邮件模板： <span th:text="${tplCount}+' '">1</span>个
+                                                    </p>
+                                                </div>
+                                                <!--未设置状态显示-->
+                                                <div class="step-item-empty" th:if="${tplCount==0}">
+                                                    <div>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    </div>
+                                                    <div>
+                                                        你还没有创建邮件模板哦，快去“创建”吧~
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-item-button">
+                                                <button class="button-size-min blue-button border-rd-10"
+                                                        onclick="window.open('template/add','_self')">
+                                                    <i class="fa fa-plus"></i>创建
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 step-item-bgimg">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li id="creatmask_status">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-9 step-item-detail">
+                                            <div class="step-item-tit">
+                                                <h1>新建任务&nbsp;&nbsp;</h1>
+
+                                                <h2 class="lookout"><i class="fa fa-lightbulb-o lookout"></i> 建立一个新的发送任务
+                                                </h2>
+                                            </div>
+                                            <div class="step-item-content">
+                                                <!--设置状态显示-->
+                                                <div class="step-item-hasrecord" th:if="${taskCount>0}">
+                                                    <p>
+                                                        已发送任务： <span th:text="${taskCount}+' '">1</span>个
+                                                    </p>
+                                                </div>
+                                                <!--未设置状态显示-->
+                                                <div class="step-item-empty" th:if="${taskCount==0}">
+                                                    <div>
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                    </div>
+                                                    <div>
+                                                        你还没有发送任务哦，快去“新建”吧~
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="step-item-button">
+                                                <button class="button-size-min blue-button border-rd-10"
+                                                        th:attr="onclick='window.open(\'__@{/user/delivery_task/add}__\',\'_self\')'">
+                                                    <i class="fa fa-plus"></i>新建
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3 step-item-bgimg">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+            <!--
+            <div class="test-announcement margin-b-10 float-r">
+                <h1 class="margin-b-15">猴年新春新版上线</h1>
+                <p class="margin-b-15">邮件通现已更名《云邮通》<br/>新版对用户体验做了改进，并增加部分新功能；<br/>旧版仅支持历史任务查询，其他功能已停止使用。</p>
+                <a th:class="youjian" url="/SendMailApp/sendReport.asp" href="#" class="a-block underline">查看历史任务</a>
+            </div>
+            -->
+            <div class="masklist-wapper">
+                <div class="masklist-tit">
+                    <span>最近任务</span>
+                    <a th:href="@{/user/delivery_task}" class="underline">全部任务</a>
+                </div>
+                <div class="adv-title">
+                    <img id="adv_tit"
+                         src="/img/template/adv_title.png"
+                         alt="模板新功能">
+                </div>
+                <div class="masklist-content" id="recentmask_status">
+                    <div class="masklist-empty margin-t-20" id="masklist-empty">
+                    </div>
+                    <div class="masklist-hasrecord">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--最近没有任务-->
+    <script th:id="no_task-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <i class="fa fa-frown-o"></i>
+        <p>
+            你还没有任务哦
+        </p>
+    </script>
+    <!--最近任务-->
+    <script th:id="recent_task-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <li>
+            <p>
+                {{name}}
+            </p>
+            <p>
+                <span class="masklist-date">{{dateForDay}}</span>
+                <span>{{dateForHour}}</span>
+            </p>
+        </li>
+    </script>
+
+    <!--广告-->
+    <script id="adv_temp" type="text/template">
+        <div class="adv-bg"
+             id="adv_bg"></div>
+        <div class="adv-wapper"
+             id="adv_wapper">
+            <div class="adv_content">
+                <img class="adv-close"
+                     src="/img/template/adv_close.png"
+                     alt="关闭"
+                     id="adv_close">
+                <div class="link-wapper">
+                    <a class="use a-block"
+                       href="template/add">立即使用</a>
+                    <a class="note"
+                       href="template/note">功能说明</a>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_home})"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_delivery_settings id="2" created_date="2015-11-16 14:36:28" last_modified_date="2015-11-16 14:36:38"
+                                 sender_name="test_johnny2" sender_email="test_11@qq.com" reply_name="admin"
+                                 reply_email="test_22@qq.com" is_agent_send="0"
+                                 user_id="1" checked="0" version="0"/>
+    <user_mail_delivery_settings id="3" created_date="2015-11-16 14:36:28" last_modified_date="2015-11-16 14:36:38"
+                                 sender_name="test_johnny3" sender_email="test_11@qq.com" reply_name="admin"
+                                 reply_email="test_22@qq.com" is_agent_send="0"
+                                 user_id="1" checked="0" version="0"/>
+</dataset>

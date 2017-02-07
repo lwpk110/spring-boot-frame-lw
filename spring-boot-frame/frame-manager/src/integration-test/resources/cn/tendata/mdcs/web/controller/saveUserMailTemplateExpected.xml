@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_templates id="1" name="aaa" use_count="0" subject="test template" body="test template" is_html="0"
+                         user_id="1" version="0" approve_status="1"/>
+</dataset>

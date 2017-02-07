@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_templates id="1" name="aaa" use_count="1" subject="test template" body="test template" is_html="0"
+                         user_id="1" created_date="2015-11-16 14:36:28" last_modified_date="2015-11-16 14:36:38"
+                         version="0" approve_status="5"/>
+    <user_mail_templates id="2" name="bbb" use_count="1" subject="test template" body="test template" is_html="0"
+                         user_id="1" created_date="2015-11-16 14:36:28" last_modified_date="2015-11-16 14:36:38"
+                         version="0" approve_status="5"/>
+    <user_mail_templates id="3" name="ccc" use_count="1" subject="test template" body="test template" is_html="0"
+                         user_id="1" created_date="2015-11-16 14:36:28" last_modified_date="2015-11-16 14:36:38"
+                         version="0" approve_status="5"/>
+</dataset>

@@ -1,0 +1,83 @@
+description = 'frame-core'
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
+dependencies {
+    compile "org.springframework:spring-aspects"
+    compile "org.springframework:spring-context-support"
+    compile "org.springframework.data:spring-data-jpa"
+    compile "org.springframework.data:spring-data-elasticsearch"
+    compile "org.hibernate:hibernate-validator"
+    compile "org.hibernate:hibernate-entitymanager"
+    compile "org.hsqldb:hsqldb"
+    compile "org.jadira.usertype:usertype.core:${usertypeVersion}"
+    compile "com.mysema.querydsl:querydsl-jpa"
+    compile "joda-time:joda-time"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda"
+    compile "org.apache.commons:commons-lang3"
+    compile "commons-beanutils:commons-beanutils"
+    compile "org.apache.poi:poi"
+    compile "net.sf.ehcache:ehcache"
+    compile "org.jasig.inspektr:inspektr-audit:${inspektrVersion}"
+    compile "org.jasig.inspektr:inspektr-support-spring:${inspektrVersion}"
+    compile "org.quartz-scheduler:quartz:2.2.1"
+    compile "org.quartz-scheduler:quartz-jobs:2.2.1"
+    compile "com.alibaba:fastjson:${fastjsonVersion}"
+
+
+    testCompile "org.mockito:mockito-core"
+    testCompile "org.hamcrest:hamcrest-all"
+    testCompile "junit:junit"
+    testCompile "org.springframework:spring-test"
+    integrationTestCompile "org.dbunit:dbunit:${dbunitVersion}"
+    integrationTestCompile "com.github.springtestdbunit:spring-test-dbunit:${springtestdbunitVersion}"
+    integrationTestCompile "org.glassfish:javax.el:${elVersion}"
+    
+    querydslapt "com.mysema.querydsl:querydsl-apt"
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+    }
+}
+
+if(project.hasProperty('jpaSchema')) {
+    apply from: 'jpaSchema.gradle'
+}

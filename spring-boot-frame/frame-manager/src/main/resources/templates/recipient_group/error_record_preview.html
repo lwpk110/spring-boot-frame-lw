@@ -1,0 +1,61 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!-- InstanceBegin template="/Templates/Recipients_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>收件人预览</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!--[if (gte IE 6)&(lte IE 8)]>
+    <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="container main-content">
+    <!----article---->
+    <article class="main">
+        <div class="container">
+            <div class="row margin-t-10" id="error_wapper">
+
+            </div>
+        </div>
+    </article>
+
+    <th:block layout:fragment="scripts">
+        <script th:id="error_preview" type="text/x-handlebars-template" th:inline="javascript">
+            <div class="search-data-show">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%"
+                       class="email-tong-table recipients-table" id="recipients_record">
+                    <thead>
+                    <tr>
+                        <th width="8.33%">序 号</th>
+                        <th width="58.33%">邮 箱</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {{#each this}}
+                    <tr>
+                        <td>
+                            <p>
+                                <span>{{recordNumber}}</span>
+                            </p>
+                        </td>
+                        <td>
+                            <p class="tr-singal-line">{{email}}</p>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </script>
+        <script th:replace="taglibs :: script (url=@{/js/mail_recipient_group_error_preview})"></script>
+    </th:block>
+</div>
+</body>
+<!-- InstanceEnd --></html>
+

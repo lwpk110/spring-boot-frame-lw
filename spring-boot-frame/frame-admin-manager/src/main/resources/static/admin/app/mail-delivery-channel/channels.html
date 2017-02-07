@@ -1,0 +1,155 @@
+<div class="row">
+	<div class="col-md-4 ">
+		<ul class="breadcrumb">
+			<li><i class="fa fa-home"></i><a ng-href="#/dashboard">首页</a></li>
+			<li class="active">通道</li>
+		</ul>
+	</div>
+</div>
+
+<div class="content">
+	<div class="main-header">
+		<h2>通道</h2>
+		<em>邮件通道管理</em>
+	</div>
+	<div class="main-content">
+	
+		<!------------------------- channel list ------------------------>
+		<div class="row">
+		       <div class="col-lg-12">
+		       	<div class="widget widget-focus-enabled">
+		       		<div class="loading-backdrop" ng-show="loadDivVisible">
+	           	 		<!--[if !(IE)|IE 9]><!-->
+	           	 		<i class="fa fa-spinner fa-3x fa-fw circle" loading></i>
+	           	 		<font class="loading-text">数据加载中...</font>
+	           	 		<!--<![endif]-->
+	           	 		<!--[if IE 8]>
+	           	 		<font class="loading-text">
+	           	 			数据加载中...
+	           	 		</font>
+	           	 		<![endif]--> 
+	           	 	</div>
+		           	<div class="widget-header">
+		                	<h3><i class="fa fa-table"></i> 邮件通道列表</h3>
+		               </div>
+		               <div class="widget-content" id="collapseOne">
+		                   <div class="dataTable_wrapper">
+		                   	<button type="button" class="btn btn-primary" ng-click="createChannel()">添加通道</button>
+		                   	
+		                   	<form class="form-inline form" ng-submit="search()">
+	                    	 	<select ng-options="option.name for option in searchOptionsData.availableOptions track by option.value" 
+	                    	 		ng-model="searchOptionsData.selectedOption" ng-click="changeSearchFrame()"></select>
+							  	<input type="text" class="form-control" id="searchFilter" placeholder="搜索关键字" ng-model="searchValue" ng-show="searchFrameVisible">
+							  	
+							 	<button type="submit" class="btn btn-default">搜索</button>
+							</form>
+		                      	<table class="table table-striped table-bordered table-hover" >
+		                          	<thead>
+		                              	<tr>
+		                              		<th>ID</th>
+		                                  	<th>通道名称</th>
+		                                  	<th>单价</th>
+		                                  	<th>最大限制</th>
+		                                  	<th>创建时间</th>
+		                                  	<th>状态</th>
+		                                  	<th>操作</th>
+		                              	</tr>
+		                      		</thead>
+		                      		<tbody>
+			                       		<tr ng-if="!items">
+			                       			<td colspan="7">暂无数据显示</td>
+			                       		</tr>
+		                      			<tr ng-repeat="item in items">
+		                      				<td>{{item.id}}</td>
+		                      				<td>{{item.name}}</td>
+		                      				<td>{{item.fee}}</td>
+		                      				<td>{{item.maxNumLimit}}</td>
+		                      				<td>{{item.createdDate | date:'yyyy-MM-dd'}}</td>
+		                      				<td>
+		                    					<!--[if !(IE)|IE 9]><!-->
+	                    						<span 	uib-tooltip="状态更改"
+	                    							toggle-switch 
+	                    							ng-model="item.disabled" 
+	                    							ng-click="switchDisabled(item.id, !item.disabled)" 
+	                    							on-label="开启" 
+	                    							off-label="关闭"></span>
+												<!--<![endif]-->
+		                    					<!--[if IE 8]> 
+	                    						<span title="更改状态"
+	                    							toggle-switch 
+	                    							ng-model="item.disabled" 
+	                    							ng-click="switchDisabled(item.id, !item.disabled)" 
+	                    							on-label="开启" 
+	                    							off-label="关闭"></span>
+												<![endif]--> 
+		                      				</td>
+		                      				<td>
+			                       				<span ng-controller="ModalAlertCtrl">
+			                       					<!--[if !(IE)|IE 9]><!-->
+			                       					<button class="btn btn-primary btn-xs btn-gritter" 
+			                       					        uib-tooltip="编辑" 
+			                       					        ng-click="editChannel(item)">
+			                       					    <i class="fa fa-pencil-square-o"></i>
+			                       					</button>
+			                       					<!--<![endif]-->
+			                       					
+			                       					<!--[if IE 8]>
+			                       					<button class="btn btn-primary btn-xs btn-gritter"
+			                       					        ng-click="editChannel(item)">
+			                       					    编辑
+			                       					</button>	
+			                       					<![endif]-->
+			                       					
+			                       					<!--[if !(IE)|IE 9]><!-->
+			                       					<button class="btn btn-custom-secondary btn-xs btn-gritter" 
+			                       					        uib-tooltip="节点管理" 
+			                       					        ng-click="gotoManageNodePage(item.id)">
+			                       					    <i class="fa fa-plus-square-o"></i>
+			                       					</button>
+			                       					<!--<![endif]-->
+			                       					
+			                       					<!--[if IE 8]>
+			                       					<button class="btn btn-custom-secondary btn-xs btn-gritter" 
+			                       					        ng-click="gotoManageNodePage(item.id)">
+			                       					    节点
+			                       					</button>
+			                       					<![endif]-->
+			                       				</span>
+		                      				</td>
+		                      			</tr>
+		                      		</tbody>
+		                       </table>
+		                       
+		                       <div style="margin-top:-30px;height:50px;float:right;">
+								<uib-pagination 
+									total-items="totalItems" 
+									ng-model="currentPage" 
+									max-size="maxSize" 
+									class="pagination-sm" 
+									boundary-links="true" 
+									rotate="true" 
+									num-pages="numPages"
+									items-per-page="itemsPerPage"
+									first-text="首页"
+									previous-text="上一页"
+									next-text="下一页"
+									last-text="末页"
+									ng-change="pageChanged()">
+								</uib-pagination>
+							</div>
+							
+							<span>
+		                       	 当前  {{currentPage}} / {{numPages}} 页   &nbsp;&nbsp;  
+		                       	每页显示 <select ng-options="option.name for option in pageOptionsData.availableOptions track by option.value" 
+		                   	 		ng-model="pageOptionsData.selectedOption" ng-change="changeShowSize()"></select> 条 | 
+		                   	 	共 {{totalItems}} 条
+		                       </span>
+		                    </div>
+		                </div>
+		            </div>
+			</div>
+		</div>
+		<!------------------------- end channel list ------------------------>
+	
+	</div>
+</div>

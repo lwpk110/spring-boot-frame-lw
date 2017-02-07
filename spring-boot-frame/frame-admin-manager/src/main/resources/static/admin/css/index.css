@@ -1,0 +1,141 @@
+/* label {
+	text-align: right !important;
+} */
+
+input, textarea {
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+li {
+	cursor: pointer;
+}
+
+select {
+	outline: none;
+}
+
+select option {
+	cursor: pointer;
+}
+
+.form {
+	margin-bottom: 10px;
+    float: right;
+}
+
+.form select {
+	height: 34px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+.backToList {
+	display: inline-block;
+    margin-bottom: 10px;
+}
+
+.backToList:hover {
+    text-decoration: none;
+}
+
+.show {
+	display: block;
+}
+
+.error {
+	color: #a94442;
+    display: inline-block;
+    height: 32px;
+    text-align: center;
+    padding: 5px;
+}
+
+.td-tab-form {
+	margin-top: 30px;
+}
+
+.requiredTag {
+	padding: 5px;
+    color: #FF0000;
+}
+
+.secActive {
+	color: #3E2E6B;
+	background-color: #f8f8f8;
+	font-weight: 600;
+}
+
+.modal-dialog {
+    padding-top: 200px !important;
+ }
+ 
+ md-progress-linear.md-default-theme ._md-bar, md-progress-linear ._md-bar {
+ 	background-color: #777 !important;
+ }
+ 
+ md-progress-linear.md-default-theme ._md-container, md-progress-linear ._md-container {
+    background-color: transparent !important;
+ }
+.app-modal-window .modal-dialog {
+    width: 1000px;
+}
+ 
+ .loading-backdrop {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030 !important;
+    background-color: #000;
+ 	filter: alpha(opacity = 10);
+ 	opacity: 0.1;
+ }
+ 
+ .loading-backdrop .circle {
+    margin-top: 48px;
+    margin-left: 6px;
+    color: #B2EF71;
+ }
+ 
+ .loading-backdrop .loading-text {
+    top: 52px;
+    left: 60px;
+    color: #B2EF71;
+    position: absolute;
+    font-size: 20px;
+ }
+
+ .template-title{
+     margin-left:10px;
+     font-family: 黑体;
+     font-size: 18pt
+ }
+
+ .foot-page{
+     margin-bottom:10px;
+     height:50px;
+     margin-left: auto;
+     text-align: center
+ }
+
+ .btn-hook{
+     width: 70px;
+     height: 32px
+ }
+
+ .check-list>tr:first-child>td{
+     background-color: darkgrey;
+ }
+
+ ul.portraits-list>li{
+     float: left;
+     width: 16.6%;
+     height: 50px;
+     padding: 0px 5px;
+     list-style: none;
+     margin-bottom: 15px;
+ }

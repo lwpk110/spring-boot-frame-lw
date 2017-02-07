@@ -1,0 +1,368 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>新建任务</title>
+</head>
+<body>
+<article class="main" layout:fragment="content">
+    <div class="container main-content">
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>新建任务</span>
+            </div>
+        </div>
+
+        <div class="mask-wapper">
+            <div class="row">
+                <!--任务信息-->
+                <div class="col-xs-8 mask-info-wapper" id="recipients_height">
+                    <div class="row mask-info-row">
+                        <div class="col-xs-3 mask-tit">任务名称</div>
+                        <div class="col-xs-9">
+                            <input type="text" placeholder="请输入2~100个字符" maxlength="99" class="mask-tit-input"
+                                   id="mask_tit_input">
+                        </div>
+                    </div>
+                    <div class="row mask-info-row">
+                        <div class="col-xs-3 mask-tit">发件人</div>
+                        <div class="col-xs-9">
+                            <!--没有设置发件人-->
+                            <div class="mask-info-notdone" id="mask_info_notdone" th:if="${deliverySettings.size()}==0">
+                                <p class="margin-r-5">
+                                    <i class="fa fa-exclamation-circle grey-font"></i>
+                                </p>
+
+                                <p class="grey-font">
+                                    还没有设置发件人，现在
+                                    <a th:href="@{/user/delivery_settings}" class="underline">设置</a>
+                                    发件人。
+                                </p>
+                            </div>
+                            <!--设置发件人-->
+                            <div class="mask-has-sender" th:if="${deliverySettings.size()}>0">
+                                <div class="sender-select" id="sender_select">
+                                    <span th:text="${defaultDelivery.deliverySettings.senderName}"></span>
+                                    <span     th:text="'&lt;' + ${defaultDelivery.deliverySettings.replyEmail} + '&gt;'"></span>
+
+                                </div>
+                                <ul class="sender-select-list border-rd-5 hidden-item" id="sender_select_list">
+                                    <li th:each="delivery : ${deliverySettings}"
+                                        th:class="${delivery.checked} ? sender-select-active">
+                                        <input type="hidden" th:value="${delivery.id}"/>
+                                        <i class="fa fa-check-circle margin-r-5"></i>
+                                        <span th:text="${delivery.deliverySettings.senderName}"></span>
+                                        <span th:text="'&lt;' + ${delivery.deliverySettings.replyEmail} + '&gt;'"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mask-info-row">
+                        <div class="col-xs-3 mask-tit">发送通道</div>
+                        <div class="col-xs-9 mask-pipe-wapper" th:if="!${#lists.isEmpty(deliveryChannels)}">
+                            <ul id="pipe_select_list">
+                                <li th:each="channel,iterStat : ${deliveryChannels}" th:class="${iterStat.index}==0 ? 'border-rd-3 margin-r-15 active':'border-rd-3 margin-r-15'">
+                                    <input type="hidden" th:value="${channel.id}"/>
+                                    <i class="fa fa-check-circle margin-r-5"></i>
+                                    <span th:attr="fee=${channel.fee}"
+                                          th:text="${channel.name} + '（'+ ${channel.fee} +'点/封）'"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-9 mask-pipe-wapper" th:if="${#lists.isEmpty(deliveryChannels)}">
+                            <div id="no_channel">
+                                <span th:text="暂无可用通道"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--选择收件人-->
+                    <div class="row mask-info-row">
+                        <div class="col-xs-3 mask-tit">收件人</div>
+                        <div class="col-xs-9">
+                            <!--未选择收件人前-->
+                            <div class="mask-info-notdone" id="recipients-notsured">
+                                <p class="margin-r-5">
+                                    <i class="fa fa-exclamation-circle grey-font"></i>
+                                </p>
+
+                                <p class="grey-font">
+                                    还没有选择收件人，现在
+                                  <span class="underline-select j-recipient-btn">
+                                     选择
+                                  </span>
+                                    收件人。
+                                </p>
+                            </div>
+                            <!--选择好收件人-->
+                            <div class="recipients-selected-wapper hidden-item" id="recipients-sured">
+                                <div class="row">
+                                    <div class="col-xs-11 recipients-sured-list">
+                                        <ul>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-1 recipients-selected-button">
+                                        <i class="fa fa-list-ul j-recipient-btn"></i>
+                                    </div>
+                                </div>
+                                <!--点数提示-->
+                                <div class="row">
+                                    <!--点数足够-->
+                                    <div class="col-xs-12 dot-status">
+                                        <h1 class="grey-font">
+                                            已选收件人<span class="error" id="allSelectedRecipients"></span>个，
+                                            去重剩余<span class="error" id="selectedRecipients"></span>个
+                                        </h1>
+
+                                        <h2>（剩余点数：<span id="remainBalance" th:text="${user.balance}"></span>点，
+                                            <span>还可发送<span class="error" id="remainLettersCount">5773封</span>封）</span>
+                                            <span id="checkBalance" class="hidden-item">无法发送任务,请先 <a
+                                                    th:href="@{/user/account/deposit}">购买</a> 点数）</span>
+                                        </h2>
+                                    </div>
+                                    <!--点数不足-->
+                                    <div class="col-xs-12 dot-status hidden-item">
+                                        <h1 class="grey-font">
+                                            已选收件人<span class="error"></span>个
+                                        </h1>
+
+                                        <h2>（剩余点数：<span>2</span>点，
+                                            无法发送任务，请先
+                                            <a href="accountmanger_buy.html" class="underline">购买</a>
+                                            点数
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--选择邮件模板-->
+                    <div class="row mask-info-row">
+                        <div class="col-xs-3 mask-tit">邮件模板</div>
+                        <div class="col-xs-9">
+                            <!--未选择邮件模板前-->
+                            <div class="mask-info-notdone" id="email_temp_notsure">
+                                <p class="margin-r-5">
+                                    <i class="fa fa-exclamation-circle grey-font"></i>
+                                </p>
+
+                                <p class="grey-font">
+                                    还没有选择模板，现在
+                                  <span class="underline-select j-template-btn">
+                                     选择
+                                  </span>
+                                    模板。
+                                </p>
+                            </div>
+                            <!--选择邮件模板后-->
+                            <div class="row email-temp-sure hidden-item" id="email_temp_sure">
+                                <div class="col-xs-11">
+                                    <ul></ul>
+                                </div>
+                                <div class="col-xs-1 email-tempsel-button">
+                                    <i class="fa fa-list-ul j-template-btn"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--待收件人选择列表-->
+                <div class="col-xs-4" style="overflow:hidden">
+                    <div class="recipients-list-wapper" id="recipients_list_wapper">
+                        <div class="recipients-list-tit">
+                            <i class="fa fa-group recipients-list-tit-img margin-r-10">
+                            </i>
+                            <span class="recipients-list-tit-word">待收件人</span>
+                            <i class="fa fa-check-circle recipients-list-tit-button float-r"
+                               id="recipient-selected">
+                            </i>
+                        </div>
+                        <div class="recipients-list-content">
+                            <!--没有收件人列表时-->
+                            <div class="recipients-list-empty margin-t-40" th:if="${recipientGroups.size()}==0">
+                                <i class="fa fa-frown-o"></i>
+
+                                <p>您还没有收件人哦，快去
+                                    <a th:href="@{/user/recipient_group/add}" class="underline">
+                                        添加
+                                    </a>
+                                    吧~ </p>
+                            </div>
+                            <!--有收件人列表-->
+                            <ul class="recipients-list" id="recipients_list" th:if="${recipientGroups.size()}>0">
+                                <li th:each="recipient : ${recipientGroups}">
+                                    <input type="hidden" th:value="${recipient.id}"/>
+
+                                    <div class="recipients-list-selimg float-l margin-r-5">
+                                        <i class="fa fa-check-circle margin-r-5"></i>
+                                    </div>
+                                    <div class="recipients-list-selinfo float-l">
+                                        <h1 th:text="${recipient.name}">
+                                        </h1>
+
+                                        <h2 th:text="'收件人'+${recipient.recipientCollection.recipientCount}+'个'"></h2>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--模板选择区-->
+            <div class="row temp-wapper" id="temp_wapper">
+                <div class="col-xs-12 temp-sel-area" id="temp_sel_area">
+                    <!--邮件标题-->
+                    <div class="email-temp-tit">
+                        <p class="float-l margin-r-40">
+                            <i class="fa fa-header grey-font"></i><span class="grey-font">标题</span>
+                        </p>
+
+                        <input style="border: 0px;outline: none;" type="text" class="input-size-max clear-defult-appear wysiwyg-title"/>
+                    </div>
+                    <!--邮件内容预览-->
+                    <div class="email-temp-html">
+                        <textarea id="myEditor" class="wysiwyg-frame"></textarea>
+                        <!--<iframe class="wysiwyg-frame" style="width: 100%; height: 99%;"></iframe>-->
+                    </div>
+
+                    <!--邮件模板列表-->
+                    <div class="email-temp-listwapper" id="temp_list_wapper">
+                        <div class="email-temp-listtit">
+                            <i class="fa fa-envelope-o temp-listtit-img margin-r-10"></i>
+                            <span class="temp-listtit-word">邮件模板</span>
+                            <i class="fa fa-check-circle float-r temp-listtit-button" id="template-selected"></i>
+                        </div>
+
+                        <div class="email-temp-listcontent">
+                            <!--没有模板时-->
+                            <div class="temp-list-empty margin-t-40" th:if="${templates.size()}==0">
+                                <i class="fa fa-frown-o"></i>
+
+                                <p>您还没有邮件模板哦，快去
+                                    <a th:href="@{/user/template/add}" class="underline">
+                                        创建
+                                    </a>
+                                    吧~ </p>
+                            </div>
+                            <!--有模板时-->
+                            <div class="temp-list-havetemp" id="email_temp_list" th:if="${templates.size()}>0">
+                                <ul>
+                                    <li th:each="template : ${templates}">
+                                        <input type="hidden" th:value="${template.id}"/>
+                                        <i class="fa fa-check-circle margin-r-5"></i>
+                                        <span th:attr="templateSubject=${template.template.subject},title=${template.name}"
+                                              th:with="length=${#strings.length(template.name)},name=${#strings.substring(template.name,0,length>41?41:length)}"
+                                              th:text="${name}"></span>
+                                        <input class="j-tpl" type="hidden"
+                                               th:value="${#strings.escapeXml(template.template.body)}"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--发送按钮区-->
+        <div class="row margin-t-40">
+            <div th:if="${#lists.isEmpty(deliveryChannels)}" class="col-xs-9 col-xs-offset-2">
+                <div id="no_channel_reminder" class="lookout fa fa-exclamation-circle">对不起，因通道维护中，所以暂时无法提交任务。</div>
+            </div>
+            <div class="col-xs-9 col-xs-offset-2 margin-t-20">
+                <button class="clear-defult-appear border-rd-5 blue-button button-size-max margin-r-40" th:if="!${#lists.isEmpty(deliveryChannels)}" id="send-now">
+                    立即发送
+                </button>
+                <button class="clear-defult-appear border-rd-5 disable-button blue-button button-size-max margin-r-40" th:if="${#lists.isEmpty(deliveryChannels)}" disabled="disabled" id="send-now">
+                    立即发送
+                </button>
+
+                <button class="clear-defult-appear border-rd-5 blue-button button-size-max" th:if="!${#lists.isEmpty(deliveryChannels)}" id="send-cron">
+                    <i class="fa fa-clock-o"></i> 定时发送
+                </button>
+                <button class="clear-defult-appear border-rd-5 blue-button disable-button button-size-max" th:if="${#lists.isEmpty(deliveryChannels)}" disabled="disabled" id="send-cron">
+                    <i class="fa fa-clock-o"></i> 定时发送
+                </button>
+                <input type="hidden" id="task-date"/>
+                <input type="hidden" id="task-hour" value="00"/>
+                <input type="hidden" id="task-min" value="00"/>
+            </div>
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</article>
+<th:block layout:fragment="scripts">
+    <script id="send-now-template" type="text/x-handlebars-template">
+        <p class="grey-font">本次任务一共添加了<span class="grey-font">{{sum}}</span>个收件人，其中：</p>
+        <p class="grey-font margin-t-10"> 重复收件人<span class="grey-font">{{repeat}}</span>个</p>
+        <p class="grey-font margin-t-10">去除后将对剩余<span class="grey-font">{{uniq}}</span>个收件人发送邮件。</p>
+        {{#if scheduled}}
+        <p class="grey-font margin-t-50">选择定时投递的时间：</p>
+        <div class="row margin-t-10">
+            <div class="float-l margin-r-20">
+                <input type="text" id="sent_date" class="clear-defult-appear grey-border sent-data-sel"
+                       value="{{defaultDate}}">
+            </div>
+            <div class="float-l margin-r-20"><select class="sent-hour-sel grey-border" id="sel_hour">
+                <option>00时</option>
+                <option>01时</option>
+                <option>02时</option>
+                <option>03时</option>
+                <option>04时</option>
+                <option>05时</option>
+                <option>06时</option>
+                <option>07时</option>
+                <option>08时</option>
+                <option>09时</option>
+                <option>10时</option>
+                <option>11时</option>
+                <option>12时</option>
+                <option>13时</option>
+                <option>14时</option>
+                <option>15时</option>
+                <option>16时</option>
+                <option>17时</option>
+                <option>18时</option>
+                <option>19时</option>
+                <option>20时</option>
+                <option>21时</option>
+                <option>22时</option>
+                <option>23时</option>
+            </select></div>
+            <div class="float-l"><select class="sent-min-sel grey-border" id="sel_min">
+                <!--<option>00分</option>
+                <option>05分</option>
+                <option>10分</option>
+                <option>15分</option>
+                <option>20分</option>
+                <option>25分</option>
+                <option>30分</option>
+                <option>35分</option>
+                <option>40分</option>
+                <option>45分</option>
+                <option>50分</option>
+                <option>55分</option>-->
+                <option>00分</option>
+                <option>15分</option>
+                <option>30分</option>
+                <option>45分</option>
+            </select></div>
+        </div>
+        <p class="error margin-t-10">本任务将在
+            <span class="error" id="show_date" style="font-weight:bold">2015/12/02</span> 的
+            <span class="error" id="show_hour" style="font-weight:bold">00</span>时
+            <span class="error" id="show_min" style="font-weight:bold">00</span> 分开始执行，并将扣除您账户
+            <span class="error">{{totalFee}}</span>点，是否立即执行？</p>
+        {{else}}
+        <p class="error margin-t-30">本次任务将扣除您账户<span class="error">{{totalFee}}</span>点，是否立即执行？</p>
+        {{/if}}
+    </script>
+    <script th:replace="taglibs :: script (url=@{/js/mail_delivery_tasks_edit})"></script>
+</th:block>
+</body>
+</html>

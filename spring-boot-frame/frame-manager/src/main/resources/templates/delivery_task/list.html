@@ -1,0 +1,242 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>任务管理</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>任务管理</span>
+        </div>
+        <div class="web-tit-button">
+            <button class="button-size-big blue-button border-rd-5"
+                    th:attr="onclick='window.open(\'__@{/user/delivery_task/add}__\',\'_self\')'">
+                新建任务
+            </button>
+        </div>
+        <div class="web-tit-button">
+            <button class="button-size-big blue-button border-rd-5"
+                    th:attr="onclick='window.open(\'__@{/user/delivery_task/mail_record}__\',\'_self\')'">
+                <i class="fa fa-history"></i>邮箱记录
+            </button>
+        </div>
+    </div>
+
+    <div class="row tit-search-area margin-b-10">
+        <div class="term-list-wapper">
+            <ul>
+                <li>
+                    全部时间
+                </li>
+                <li>
+                    最近7天
+                </li>
+                <li>
+                    最近30天
+                </li>
+            </ul>
+        </div>
+        <div class="tit-search-col margin-r-20">
+            <input type="text"
+                   class="input-size-small clear-defult grey-border border-rd-3 input-calendar input-bule-color"
+                   value="自定义查询时间段" id="maskmanger_calendar">
+            <input class="hidden-item" id="startDate">
+            <input class="hidden-item" id="endDate">
+        </div>
+
+        <div class="tit-search-col margin-r-20">
+            <input type="text" class="input-size-normal clear-defult grey-border border-rd-3" placeholder="请输入任务名称"
+                   id="maskname">
+        </div>
+
+        <div class="tit-search-col margin-r-20">
+            <button class="button-size-small blue-button border-rd-5" id="search">
+                <i class="fa fa-search"></i>查询
+            </button>
+        </div>
+
+        <div class="tit-search-col">
+            <select th:if="${loginUser.parentUserId} == 0" class="input-size-small grey-border border-rd-3"
+                    id="selectedUser">
+                <option th:value="0">全部账号</option>
+                <option th:text="'主账号：'+${user.username}" th:value="${user.id}" th:selected="selected"></option>
+                <option th:each="childUser : ${loginUser.childUsers}" th:text="'子账号：'+${childUser.username}"
+                        th:value="${childUser.userId}"></option>
+            </select>
+            <input th:value="${user.id}" id="userId" class="hidden-item"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <!--有数据显示表格-->
+        <div class="search-data-show">
+            <table cellpadding="0" cellspacing="0" border="0" class="email-tong-table email-tong-thl"
+                   id="mask_status_record"></table>
+        </div>
+
+    </div>
+    <!-- InstanceEndEditable -->
+    <!--发送失败-->
+    <script th:id="send_failed-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='grey-color v-left'>系统繁忙，任务发送失败，点此
+            <span class='bule-underline retry' taskId={{taskId}} userId={{userId}}>重发</span>
+        </p>
+    </script>
+    <!--状态-->
+    <script th:id="send_failed_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-exclamation-circle error' title='发送失败'>
+            </i>
+        </p>
+    </script>
+
+    <!--等待执行-->
+    <script th:id="send_waitting-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='grey-color v-left'>任务将在
+            <span>{{startExecute}}</span>开始执行
+        </p>
+    </script>
+    <!--状态-->
+    <script th:id="send_waitting_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-clock-o warning' title='等待执行'>
+            </i>
+        </p>
+    </script>
+
+    <!--执行成功-->
+    <script th:id="send_success-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <div class='col-xs-4'>
+            <p class='v-left'>{{success}}</p>
+
+            <p class='v-left grey-color'>{{success_percent}}%</p>
+        </div>
+        <div class='col-xs-4'>
+            <p class='v-left'>{{unique_open}}</p>
+
+            <p class='v-left grey-color'>{{unique_open_percent}}%</p>
+        </div>
+        <div class='col-xs-4'>
+            <p class='v-left'>{{unique_click}}</p>
+
+            <p class='v-left grey-color'>{{unique_click_percent}}%</p>
+        </div>
+
+    </script>
+    <!--状态-->
+    <script th:id="send_success_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-check-circle success' title='发送成功'>
+            </i>
+        </p>
+    </script>
+
+    <!--任务已取消-->
+    <script th:id="send_cancel-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='grey-color v-left'>
+            任务已取消，点此
+            <span class='bule-underline deliveryRollback' taskId={{taskId}}>加入待收件人</span>
+        </p>
+    </script>
+    <!--状态-->
+    <script th:id="send_cancel_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-times-circle grey-color' title='任务取消'>
+            </i>
+        </p>
+    </script>
+    <!--任务发送中-->
+    <script th:id="send_sending-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='grey-color v-left'>任务发送中</p>
+    </script>
+    <!--状态-->
+    <script th:id="send_sending_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-spinner grey-color' title='发送中'>
+            </i>
+        </p>
+    </script>
+    <!--任务等报告-->
+    <script th:id="send_waitting_report-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='grey-color v-left'>任务将在
+        <span class="countdown" countdown="{{countdown}}">{{report_time}}
+        </span>后显示报告
+        </p>
+    </script>
+    <!--状态-->
+    <script th:id="send_waitting_report_status-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-middle'>{{total}}</p>
+        <p class='v-middle'>
+            <i class='td-status fa fa-paper-plane Info' title='等待报告'>
+            </i>
+        </p>
+    </script>
+    <!--撤销-->
+    <script th:id="send_backout-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <div class='v-middle td-action backout' taskId={{taskId}}>
+            <i class='fa fa-undo' title='撤销'>
+            </i>
+        </div>
+    </script>
+    <!--撤销弹框-->
+    <script id="send_backout_dialog-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class="grey-font margin-t-10"> 任务撤销后，系统会将本任务使用的点数退回到您账户内。</p>
+        <p class="error margin-t-30">确认撤销本任务？</p>
+    </script>
+    <!--查看-->
+    <script th:id="send_view-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <div class='v-middle td-action view' taskId={{taskId}}>
+            <i class='fa fa-arrow-circle-right' title='查看报告'>
+            </i>
+        </div>
+    </script>
+    <!--加载-->
+    <script th:id="loading-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <div class="loading report-loading" taskId={{taskId}}>
+        </div>
+    </script>
+    <!--加入待收件人组-->
+    <script th:id="add_recipient_group-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <div class='row grey-font margin-t-20'>收件人组名称</div>
+        <div class='row margin-t-10'>
+            <input type='text' class='border-rd-5 grey-border report-input-long' maxlength='99'
+                   placeholder='请输入2~100个字符' id='report_group_name'/>
+        </div>
+        <div class='row margin-t-10 error' style='visibility:hidden;' id='group_name_signal'>
+            <i class='fa fa-exclamation-triangle error'></i>名称不能为空！
+        </div>
+    </script>
+    <!--服务器出错-->
+    <script th:id="service_error-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-left error'>服务器出错,请稍后再试!</p>
+    </script>
+    <!--请求超时-->
+    <script th:id="service_timeout-tpl" type="text/x-handlebars-template" th:inline="javascript">
+        <p class='v-left error'>请求超时,请稍后再试!</p>
+    </script>
+</div>
+
+<script id="entry-template" type="text/x-handlebars-template">
+    <div class="entry">
+        <h1>{{title}}</h1>
+
+        <div class="body">
+            {{body}}
+        </div>
+    </div>
+</script>
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_delivery_tasks})"></script>
+</th:block>
+</body>
+</html>

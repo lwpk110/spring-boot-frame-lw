@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <mail_delivery_channel_nodes id="1" version="1" disabled="true"
+    	config_props='{"a":2}' server_key="1"  name="test update nodeName" channel_id="1"/>
+</dataset>

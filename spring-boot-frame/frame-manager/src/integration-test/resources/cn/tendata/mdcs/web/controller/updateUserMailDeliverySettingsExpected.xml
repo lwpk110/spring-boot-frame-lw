@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_delivery_settings id="1"
+                                 sender_name="test_johnny2"
+                                 sender_email="test_11@qq.com"
+                                 reply_name="admin"
+                                 reply_email="test_22@qq.com"
+                                 is_agent_send="0"
+                                 user_id="1" checked="0" version="1"/>
+</dataset>

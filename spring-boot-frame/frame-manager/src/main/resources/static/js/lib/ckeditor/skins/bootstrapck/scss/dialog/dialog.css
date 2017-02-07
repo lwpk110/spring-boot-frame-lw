@@ -1,0 +1,910 @@
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+dialog.css
+============
+
+This file styles dialogs and all widgets available inside of it (tabs, buttons,
+fields, etc.).
+
+Dialogs are a complex system because they're very flexible. The CKEditor API
+makes it easy to create and customize dialogs by code, by making use of several
+different widgets inside its contents.
+
+All dialogs share a main dialog strucuture, which can be visually represented
+as follows:
+
++-- .cke_dialog -------------------------------------------------+
+| +-- .cke_dialog_body ----------------------------------------+ |
+| | +-- .cke_dialog_title --+ +-- .cke_dialog_close_button --+ | |
+| | |                       | |                              | | |
+| | +-----------------------+ +------------------------------+ | |
+| | +-- .cke_dialog_tabs ------------------------------------+ | |
+| | |                                                        | | |
+| | +--------------------------------------------------------+ | |
+| | +-- .cke_dialog_contents --------------------------------+ | |
+| | | +-- .cke_dialog_contents_body -----------------------+ | | |
+| | | |                                                    | | | |
+| | | +----------------------------------------------------+ | | |
+| | | +-- .cke_dialog_footer ------------------------------+ | | |
+| | | |                                                    | | | |
+| | | +----------------------------------------------------+ | | |
+| | +--------------------------------------------------------+ | |
+| +------------------------------------------------------------+ |
++----------------------------------------------------------------+
+
+/* Config files, where variables are defined */
+/* ==========================================================================
+   Config
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+/* ==========================================================================
+   Defaults
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/config\/_defaults\.scss}line{font-family:\0000317}}
+input.cke_dialog_ui_input_text,
+input.cke_dialog_ui_input_password,
+textarea.cke_dialog_ui_input_textarea {
+  background-color: #fff;
+  outline: none;
+  width: 100%;
+  *width: 95%;
+  height: 30px;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/config\/_defaults\.scss}line{font-family:\0000332}}
+input.cke_dialog_ui_input_text:focus,
+input.cke_dialog_ui_input_password:focus,
+textarea.cke_dialog_ui_input_textarea:focus {
+  border-color: #66afe9;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+/* Comments in this file will give more details about each of the above blocks.
+*/
+/* The outer container of the dialog. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000346}}
+.cke_dialog {
+  /* Mandatory: Because the dialog.css file is loaded on demand, we avoid
+      showing an unstyled dialog by hidding it. Here, we restore its visibility. */
+  visibility: visible;
+}
+
+/* The inner boundary container. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000353}}
+.cke_dialog_body {
+  z-index: 1;
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* This one is required by Firefox 3.6. Without it,
+   dialog tabs and resizer float outside of the dialog.
+   Although this rule doesn't seem to break anything on other
+   browsers, it doesn't work with broken jQueryUI - #9851. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000365}}
+.cke_browser_gecko19 .cke_dialog_body {
+  position: relative;
+}
+
+/* Due to our reset we have to recover the styles of some elements. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000370}}
+.cke_dialog strong {
+  font-weight: bold;
+}
+
+/* The dialog title. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000375}}
+.cke_dialog_title {
+  font-weight: bold;
+  font-size: 13px;
+  cursor: move;
+  position: relative;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 12px;
+  background: #eee;
+}
+
+/* The outer part of the dialog contants, which contains the contents body
+   and the footer. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000388}}
+.cke_dialog_contents {
+  background-color: #fff;
+  overflow: auto;
+  padding: 15px 10px 5px 10px;
+  margin-top: 35px;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 4px 4px;
+}
+
+/* The contents body part, which will hold all elements available in the dialog. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\0000398}}
+.cke_dialog_contents_body {
+  overflow: auto;
+  padding: 17px 10px 5px 10px;
+  margin-top: 22px;
+}
+
+/* The dialog footer, which usually contains the "Ok" and "Cancel" buttons as
+   well as a resize handler. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003106}}
+.cke_dialog_footer {
+  text-align: right;
+  position: relative;
+  border-radius: 0 0 4px 4px;
+  border-top: 1px solid #ddd;
+  background: #eee;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003114}}
+.cke_rtl .cke_dialog_footer {
+  text-align: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003118}}
+.cke_hc .cke_dialog_footer {
+  outline: none;
+  border-top: 1px solid #fff;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003123}}
+.cke_dialog .cke_resizer {
+  margin-top: 28px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003127}}
+.cke_dialog .cke_resizer_rtl {
+  margin-left: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003131}}
+.cke_dialog .cke_resizer_ltr {
+  margin-right: 5px;
+}
+
+/*
+Dialog tabs
+-------------
+
+Tabs are presented on some of the dialogs to make it possible to have its
+contents split on different groups, visible one after the other.
+
+The main element that holds the tabs can be made hidden, in case of no tabs
+available.
+
+The following is the visual representation of the tabs block:
+
++-- .cke_dialog_tabs ------------------------------------+
+|  +-- .cke_dialog_tab --+ +-- .cke_dialog_tab --+ ...   |
+|  |                     | |                     |       |
+|  +---------------------+ +---------------------+       |
++--------------------------------------------------------+
+
+The .cke_dialog_tab_selected class is appended to the active tab.
+*/
+/* The main tabs container. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003157}}
+.cke_dialog_tabs {
+  height: 24px;
+  display: inline-block;
+  margin: 10px 0 0;
+  position: absolute;
+  z-index: 2;
+  left: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003166}}
+.cke_rtl .cke_dialog_tabs {
+  right: 10px;
+}
+
+/* A single tab (an <a> element). */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003171}}
+a.cke_dialog_tab {
+  height: 16px;
+  padding: 4px 8px;
+  margin-right: 3px;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 16px;
+  outline: none;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 3px 3px 0 0;
+  background: #f3f3f3;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003186}}
+.cke_rtl a.cke_dialog_tab {
+  margin-right: 0;
+  margin-left: 3px;
+}
+
+/* A hover state of a regular inactive tab. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003192}}
+a.cke_dialog_tab:hover {
+  background: #ddd;
+  text-decoration: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003197}}
+a.cke_dialog_tab_selected {
+  background: #fff;
+  color: #333;
+  border-bottom-color: #fff;
+  cursor: default;
+  filter: none;
+}
+
+/* A hover state for selected tab. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003207}}
+a.cke_dialog_tab_selected:hover {
+  background: #fff;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003211}}
+.cke_hc a.cke_dialog_tab:hover,
+.cke_hc a.cke_dialog_tab_selected {
+  border: 3px solid;
+  padding: 2px 6px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003218}}
+a.cke_dialog_tab_disabled {
+  color: #bababa;
+  cursor: default;
+}
+
+/* selectbox inside tabs container */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003226}}
+.cke_dialog_tabs .cke_dialog_ui_input_select {
+  top: -7px !important;
+}
+
+/* The .cke_single_page class is appended to the dialog outer element in case
+   of dialogs that has no tabs. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003233}}
+.cke_single_page .cke_dialog_tabs {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003238}}
+.cke_single_page .cke_dialog_contents {
+  padding-top: 5px;
+  margin-top: 0;
+  border-top: none;
+}
+
+/* The close button at the top of the dialog. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003247}}
+.cke_dialog_close_button {
+  background-image: url(images/close.png);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  top: 9px;
+  z-index: 5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003260}}
+.cke_hidpi .cke_dialog_close_button {
+  background-image: url(images/hidpi/close.png);
+  background-size: 16px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003265}}
+.cke_dialog_close_button span {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003269}}
+.cke_hc .cke_dialog_close_button span {
+  display: inline;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+  top: 3px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003277}}
+.cke_ltr .cke_dialog_close_button {
+  right: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003281}}
+.cke_rtl .cke_dialog_close_button {
+  left: 6px;
+}
+
+/*
+Dialog UI Elements
+--------------------
+
+The remaining styles define the UI elements that can be used inside dialog
+contents.
+
+Most of the UI elements on dialogs contain a textual label. All of them share
+the same labelling structure, having the label text inside an element with
+.cke_dialog_ui_labeled_label and the element specific part inside the
+.cke_dialog_ui_labeled_content class.
+*/
+/* If an element is supposed to be disabled, the .cke_disabled class is
+   appended to it. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003301}}
+div.cke_disabled .cke_dialog_ui_labeled_content div * {
+  background-color: #ddd;
+  cursor: default;
+}
+
+/*
+Horizontal-Box and Vertical-Box
+---------------------------------
+
+There are basic layou element used by the editor to properly align elements in
+the dialog. They're basically tables that have each cell filled by UI elements.
+
+The following is the visual representation of a H-Box:
+
++-- .cke_dialog_ui_hbox --------------------------------------------------------------------------------+
+|  +-- .cke_dialog_ui_hbox_first --+ +-- .cke_dialog_ui_hbox_child --+ +-- .cke_dialog_ui_hbox_last --+ |
+|  +                               + +                               + +                              + |
+|  +-------------------------------+ +-------------------------------+ +------------------------------+ |
++-------------------------------------------------------------------------------------------------------+
+
+It is possible to have nested V/H-Boxes.
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003325}}
+.cke_dialog_ui_vbox table, .cke_dialog_ui_hbox table {
+  margin: auto;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003329}}
+.cke_dialog_ui_vbox {
+  margin-top: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003332}}
+.cke_dialog_ui_vbox_child {
+  padding: 5px 0px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003336}}
+.cke_dialog_ui_hbox {
+  width: 100%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003340}}
+.cke_dialog_ui_hbox_first,
+.cke_dialog_ui_hbox_child,
+.cke_dialog_ui_hbox_last {
+  vertical-align: top;
+}
+
+/* To center a horizontal label-input (selection field dialog / find and replace) */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003349}}
+.cke_dialog_ui_hbox_first > .cke_dialog_ui_labeled_label, .cke_dialog_ui_hbox_first > .cke_dialog_ui_html,
+.cke_dialog_ui_hbox_last > .cke_dialog_ui_labeled_label,
+.cke_dialog_ui_hbox_last > .cke_dialog_ui_html {
+  line-height: 30px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003354}}
+.cke_ltr .cke_dialog_ui_hbox_first,
+.cke_ltr .cke_dialog_ui_hbox_child {
+  padding-right: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003359}}
+.cke_rtl .cke_dialog_ui_hbox_first,
+.cke_rtl .cke_dialog_ui_hbox_child {
+  padding-left: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003364}}
+.cke_ltr .cke_dialog_footer_buttons .cke_dialog_ui_hbox_first,
+.cke_ltr .cke_dialog_footer_buttons .cke_dialog_ui_hbox_child {
+  padding-right: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003369}}
+.cke_rtl .cke_dialog_footer_buttons .cke_dialog_ui_hbox_first,
+.cke_rtl .cke_dialog_footer_buttons .cke_dialog_ui_hbox_child {
+  padding-left: 5px;
+  padding-right: 0;
+}
+
+/* Applies to all labeled dialog fields */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003377}}
+.cke_hc div.cke_dialog_ui_input_text, .cke_hc div.cke_dialog_ui_input_password, .cke_hc div.cke_dialog_ui_input_textarea, .cke_hc div.cke_dialog_ui_input_select, .cke_hc div.cke_dialog_ui_input_file {
+  border: 1px solid;
+}
+
+/*
+Text Input
+------------
+
+The basic text field to input text.
+
++-- .cke_dialog_ui_text --------------------------+
+|  +-- .cke_dialog_ui_labeled_label ------------+ |
+|  |                                            | |
+|  +--------------------------------------------+ |
+|  +-- .cke_dialog_ui_labeled_content ----------+ |
+|  | +-- div.cke_dialog_ui_input_text --------+ | |
+|  | | +-- input.cke_dialog_ui_input_text --+ | | |
+|  | | |                                    | | | |
+|  | | +------------------------------------+ | | |
+|  | +----------------------------------------+ | |
+|  +--------------------------------------------+ |
++-------------------------------------------------+
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003406}}
+.cke_dialog_ui_text {
+  margin-bottom: 7px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003409}}
+.cke_dialog_ui_select {
+  height: auto !important;
+  margin-bottom: 7px;
+}
+
+/*
+Textarea
+----------
+
+The textarea field to input larger text.
+
++-- .cke_dialog_ui_textarea --------------------------+
+|  +-- .cke_dialog_ui_labeled_label ----------------+ |
+|  |                                                | |
+|  +------------------------------------------------+ |
+|  +-- .cke_dialog_ui_labeled_content --------------+ |
+|  | +-- div.cke_dialog_ui_input_textarea --------+ | |
+|  | | +-- input.cke_dialog_ui_input_textarea --+ | | |
+|  | | |                                        | | | |
+|  | | +----------------------------------------+ | | |
+|  | +--------------------------------------------+ | |
+|  +------------------------------------------------+ |
++-----------------------------------------------------+
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003434}}
+textarea.cke_dialog_ui_input_textarea {
+  overflow: auto;
+  resize: none;
+}
+
+/*
+Button
+--------
+
+The buttons used in the dialog footer or inside the contents.
+
++-- a.cke_dialog_ui_button -----------+
+|  +-- span.cke_dialog_ui_button --+  |
+|  |                               |  |
+|  +-------------------------------+  |
++-------------------------------------+
+*/
+/* The outer part of the button. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003460}}
+a.cke_dialog_ui_button {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  padding: 3px 0;
+  margin: 0;
+  text-align: center;
+  color: #333;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003477}}
+a.cke_dialog_ui_button:hover, a.cke_dialog_ui_button:focus, a.cke_dialog_ui_button:active {
+  border-color: #aaa;
+  background-color: #eee;
+  text-decoration: none;
+}
+
+/* Buttons inside the content */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003486}}
+.cke_dialog_page_contents a.cke_dialog_ui_button {
+  height: 22px;
+  line-height: 22px;
+  background-color: #f4f4f4;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003490}}
+.cke_dialog_page_contents a.cke_dialog_ui_button:hover, .cke_dialog_page_contents a.cke_dialog_ui_button:focus, .cke_dialog_page_contents a.cke_dialog_ui_button:active {
+  background-color: #eee;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003496}}
+span.cke_dialog_ui_button {
+  padding: 0 12px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003501}}
+.cke_hc a.cke_dialog_ui_button:hover, .cke_hc a.cke_dialog_ui_button:focus, .cke_hc a.cke_dialog_ui_button:active {
+  border: 3px solid;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003506}}
+.cke_hc a.cke_dialog_ui_button:hover span, .cke_hc a.cke_dialog_ui_button:focus span, .cke_hc a.cke_dialog_ui_button:active span {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/*
+a.cke_dialog_ui_button[style*="width"]
+{
+    display: block !important;
+    width: auto !important;
+}
+*/
+/* The inner part of the button (both in dialog tabs and dialog footer). */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003521}}
+.cke_dialog_footer_buttons a.cke_dialog_ui_button span {
+  color: inherit;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/* Special class appended to the Ok button. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003528}}
+a.cke_dialog_ui_button_ok {
+  color: #fff;
+  border-color: #2274c9;
+  background: #3F8EDF;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003532}}
+a.cke_dialog_ui_button_ok:hover, a.cke_dialog_ui_button_ok:focus, a.cke_dialog_ui_button_ok:active {
+  border-color: #1e68b4;
+  background: #2981db;
+}
+
+/* Special class appended to the Cancel button. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003539}}
+a.cke_dialog_ui_button_cancel {
+  background-color: #fff;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003541}}
+a.cke_dialog_ui_button_cancel:focus {
+  outline: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003546}}
+span.cke_dialog_ui_button {
+  cursor: pointer;
+}
+
+/* A special container that holds the footer buttons. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003551}}
+.cke_dialog_footer_buttons {
+  display: inline-table;
+  margin: 10px;
+  width: auto;
+  position: relative;
+  vertical-align: middle;
+}
+
+/*
+Styles for other dialog element types.
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003563}}
+div.cke_dialog_ui_input_select {
+  display: table;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003567}}
+select.cke_dialog_ui_input_select {
+  height: 30px;
+  line-height: 30px;
+  background-color: #fff;
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003582}}
+.cke_dialog_ui_input_file {
+  width: 100%;
+  height: 30px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003589}}
+.cke_hc .cke_dialog_ui_labeled_content input:focus, .cke_hc .cke_dialog_ui_labeled_content select:focus, .cke_hc .cke_dialog_ui_labeled_content textarea:focus {
+  outline: 1px dotted;
+}
+
+/*
+ * Some utility CSS classes for dialog authors.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003599}}
+.cke_dialog .cke_dark_background {
+  background-color: #eee;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003602}}
+.cke_dialog .cke_light_background {
+  background-color: #eee;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003605}}
+.cke_dialog .cke_centered {
+  text-align: center;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003609}}
+.cke_dialog a.cke_btn_reset {
+  float: right;
+  background: url(images/refresh.png) top left no-repeat;
+  width: 16px;
+  height: 16px;
+  border: 1px none;
+  font-size: 1px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003618}}
+.cke_dialog a.cke_btn_locked, .cke_dialog a.cke_btn_unlocked {
+  float: left;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  border: none 1px;
+  font-size: 1px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003626}}
+.cke_dialog a.cke_btn_locked {
+  background-image: url(images/lock.png);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003628}}
+.cke_dialog a.cke_btn_locked .cke_icon {
+  display: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003632}}
+.cke_dialog a.cke_btn_unlocked {
+  background-image: url(images/lock-open.png);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003636}}
+.cke_dialog .cke_btn_over {
+  border: outset 1px;
+  cursor: pointer;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003643}}
+.cke_hidpi .cke_dialog a.cke_btn_reset {
+  background-size: 16px;
+  background-image: url(images/hidpi/refresh.png);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003647}}
+.cke_hidpi .cke_dialog a.cke_btn_unlocked, .cke_hidpi .cke_dialog a.cke_btn_locked {
+  background-size: 16px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003650}}
+.cke_hidpi .cke_dialog a.cke_btn_locked {
+  background-image: url(images/hidpi/lock.png);
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003653}}
+.cke_hidpi .cke_dialog a.cke_btn_unlocked {
+  background-image: url(images/hidpi/lock-open.png);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003659}}
+.cke_rtl .cke_dialog a.cke_btn_reset {
+  float: left;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003662}}
+.cke_rtl .cke_dialog a.cke_btn_locked, .cke_rtl .cke_dialog a.cke_btn_unlocked {
+  float: right;
+}
+
+/*
+The rest of the file contains style used on several common plugins. There is a
+tendency that these will be moved to the plugins code in the future.
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003673}}
+.cke_dialog .ImagePreviewBox, .cke_dialog .FlashPreviewBox {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-top: 5px;
+  background-color: white;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003680}}
+.cke_dialog .ImagePreviewBox {
+  overflow: scroll;
+  height: 205px;
+  width: 300px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003684}}
+.cke_dialog .ImagePreviewBox table td {
+  white-space: normal;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003688}}
+.cke_dialog .FlashPreviewBox {
+  white-space: normal;
+  overflow: auto;
+  height: 160px;
+  width: 390px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003694}}
+.cke_dialog .ImagePreviewLoader {
+  position: absolute;
+  white-space: normal;
+  overflow: hidden;
+  height: 160px;
+  width: 230px;
+  margin: 2px;
+  padding: 2px;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  background-color: #e4e4e4;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003707}}
+.cke_dialog .cke_pastetext {
+  width: 346px;
+  height: 170px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003710}}
+.cke_dialog .cke_pastetext textarea {
+  width: 340px;
+  height: 170px;
+  resize: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003716}}
+.cke_dialog iframe.cke_pasteframe {
+  width: 346px;
+  height: 130px;
+  background-color: white;
+  border: 1px solid #aeb3b9;
+  border-radius: 4px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003723}}
+.cke_dialog .cke_hand {
+  cursor: pointer;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003728}}
+.cke_disabled {
+  color: #a0a0a0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003733}}
+.cke_dialog_body .cke_label {
+  display: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003736}}
+.cke_dialog_body label {
+  display: inline-block;
+  margin-bottom: 3px;
+  cursor: default;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003740}}
+.cke_dialog_body label.cke_required {
+  font-weight: bold;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003746}}
+.cke_dialog_ui_html {
+  line-height: 150%;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003750}}
+a.cke_smile {
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  padding: 0.3em 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003755}}
+a.cke_smile img {
+  vertical-align: middle;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003760}}
+a.cke_specialchar {
+  cursor: inherit;
+  display: block;
+  height: 1.25em;
+  padding: 0.2em 0.3em;
+  text-align: center;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003768}}
+a.cke_smile,
+a.cke_specialchar {
+  background-color: #eee;
+  border: 1px solid transparent;
+  vertical-align: top;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003773}}
+a.cke_smile:hover, a.cke_smile:focus, a.cke_smile:active,
+a.cke_specialchar:hover,
+a.cke_specialchar:focus,
+a.cke_specialchar:active {
+  background: #fff;
+  outline: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003777}}
+a.cke_smile:hover,
+a.cke_specialchar:hover {
+  border-color: #aaa;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003780}}
+a.cke_smile:focus, a.cke_smile:active,
+a.cke_specialchar:focus,
+a.cke_specialchar:active {
+  border-color: #428bca;
+}
+
+/**
+ * Styles specific to "cellProperties" dialog.
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003789}}
+.cke_dialog_contents a.colorChooser {
+  display: block;
+  margin-top: 6px;
+  margin-left: 10px;
+  width: 80px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003796}}
+.cke_rtl .cke_dialog_contents a.colorChooser {
+  margin-right: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003801}}
+.cke_dialog_ui_checkbox {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+/* Compensate focus outline for some input elements. (#6200) */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003807}}
+.cke_dialog_ui_checkbox_input:focus,
+.cke_dialog_ui_radio_input:focus,
+.cke_btn_over {
+  outline: 1px dotted #696969;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/dialog\/dialog\.scss}line{font-family:\00003813}}
+.cke_iframe_shim {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  filter: alpha(opacity=0);
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <users id="1" username="aaa" balance="9900" total_deposit="10000" version="1"/>
+    <users id="2" username="bbb" balance="0" total_deposit="0" version="0"/>
+    <users id="3" username="ccc" balance="100" total_deposit="0" version="1"/>
+    
+    <user_transaction_details id="1" transaction_type="BALANCE_ASSIGN" credits="-100" user_id="1" />
+    <user_transaction_details id="2" transaction_type="BALANCE_ASSIGN" credits="100" user_id="3" />
+</dataset>

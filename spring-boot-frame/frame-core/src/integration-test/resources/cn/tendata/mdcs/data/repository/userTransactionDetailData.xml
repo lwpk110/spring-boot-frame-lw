@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_transaction_details id="1" transaction_type="DEPOSIT" credits="2000" created_date="2015-11-19 13:36:28" user_id="1" />
+    <user_transaction_details id="2" transaction_type="SEND" credits="-1500" comment="coment1" created_date="2015-11-19 14:36:28" user_id="1" />
+    <user_transaction_details id="3" transaction_type="SEND_CANCEL" credits="500" comment="coment2" created_date="2015-11-19 15:36:28" user_id="1" />
+</dataset>

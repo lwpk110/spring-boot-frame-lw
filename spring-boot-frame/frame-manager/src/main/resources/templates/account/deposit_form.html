@@ -1,0 +1,83 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+
+<head>
+    <meta charset="utf-8">
+    <title>购买点数</title>
+</head>
+
+<body>
+    <div class="container main-content" layout:fragment="content">
+        <!-- InstanceBeginEditable name="Main_Area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>购买点数</span>
+            </div>
+        </div>
+
+        <div class="row margin-t-30">
+            <form method="post" id="pay_form" th:action="@{#}">
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-2">购买账号</div>
+                    <div class="col-xs-10" th:text="${user.username}">tendatacn</div>
+                </div>
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-2">可选套餐</div>
+                    <div class="col-xs-10 set-meal-list" id="set_meal_list">
+                        <!--套餐-->
+                        <ul>
+                            <li class="set-meal-select">
+                                <i class="fa fa-check"></i>￥10 / 1000点
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-2">购买数量</div>
+                    <div class="col-xs-10 account-buy-amount">
+                        <input type="text" value="1" id="account_buy_amount">份
+                    </div>
+                </div>
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-2">支付方式</div>
+                    <div class="col-xs-10 account-pay-style">
+                        <h1>余额支付</h1>
+                        <input type="hidden" id="j-balance" th:value="${balanceResult.getBalance()}">
+                        <h2>（账户余额
+                    <span id="rest_money_wapper"></span>
+                    元，最多能购买
+                    <span class="lookout" id="max_num_wapper"></span>
+                    点）
+                </h2>
+                    </div>
+                </div>
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-2">合计金额</div>
+                    <div class="col-xs-10 account-total-pay">
+                        <h1><span id="total_pay_wapper"></span>元</h1>
+                        <h2 class="hidden-item" id="not_enough_signal">
+                    （账户余额不足，请去
+                    <a class="underline" th:href="@{__${LINK_PAY_ROOT}__/account/deposit}">充值</a>
+                    。）
+                </h2>
+                    </div>
+                </div>
+                <div class="row margin-b-40 account-buy-row">
+                    <div class="col-xs-10 col-xs-offset-2">
+                        <button class="clear-defult-appear blue-button button-size-max border-rd-5" id="pay_button" type="submit">
+                            立即支付
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" name="credits" id="credits">
+                <input type="hidden" name="amount" id="amount">
+            </form>
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+    <th:block layout:fragment="scripts">
+        <script th:replace="taglibs :: script (url=@{/js/account_deposit_edit})"></script>
+    </th:block>
+</body>
+
+</html>

@@ -1,0 +1,1510 @@
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+editor.css
+============
+
+This is he heart of the skin system. This is the file loaded by the editor to
+style all elements inside its main interface.
+
+To make it easier to maintain, instead of including all styles here, we import
+other files.
+*/
+/* Config files, where variables are defined */
+/* ==========================================================================
+   Config
+
+   This file is exclusively intended for setting up imports
+   Never add styles directly to this file
+   ========================================================================== */
+/* ==========================================================================
+   Colors
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+/* ==========================================================================
+   Defaults
+
+   This file is exclusively intended for setting up variables
+   Never add styles directly to this file
+   ========================================================================== */
+/* "Reset" styles, necessary to avoid the editor UI being broken by external CSS. */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+reset.css (part of editor.css)
+================================
+
+This file holds the "reset" requirements of CKEditor, as well as define the
+default interface styles.
+
+CKEditor includes two main "reset" class names in the DOM structure created for
+editors:
+
+    * .cke_reset: Intended to reset a specific element, but not its children.
+      Because of this, only styles that will not be inherited can be defined.
+
+    * .cke_reset_all: Intended to reset not only the element holding it, but
+       also its child elements.
+
+To understand why "reset" is needed, check the CKEditor Skin SDK:
+http://docs.cksource.com/CKEditor_4.x/Skin_SDK/Reset
+*/
+/* Reset for single elements, not their children. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000327}}
+.cke_reset {
+  /* Do not include inheritable rules here. */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: none;
+  width: auto;
+  height: auto;
+  vertical-align: baseline;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  position: static;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  transition: none;
+}
+
+/* Reset for elements and their children. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000348}}
+.cke_reset_all, .cke_reset_all * {
+  /* The following must be identical to .cke_reset. */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: none;
+  width: auto;
+  height: auto;
+  vertical-align: baseline;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  position: static;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  transition: none;
+  /* These are rule inherited by all children elements. */
+  border-collapse: collapse;
+  font: normal normal normal 12px Arial,Helvetica,Tahoma,Verdana,Sans-Serif;
+  color: #333;
+  text-align: left;
+  white-space: nowrap;
+  cursor: auto;
+  float: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000377}}
+.cke_reset_all {
+  /* Defaults for some elements. */
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000378}}
+.cke_reset_all .cke_rtl * {
+  text-align: right;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000382}}
+.cke_reset_all iframe {
+  vertical-align: inherit;
+  /** For IE */
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000385}}
+.cke_reset_all textarea {
+  white-space: pre;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000388}}
+.cke_reset_all textarea, .cke_reset_all input[type="text"], .cke_reset_all input[type="password"] {
+  cursor: text;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000391}}
+.cke_reset_all textarea[disabled], .cke_reset_all input[type="text"][disabled], .cke_reset_all input[type="password"][disabled] {
+  cursor: default;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000394}}
+.cke_reset_all fieldset {
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\0000398}}
+.cke_reset_all fieldset legend {
+  padding: 0 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_reset\.scss}line{font-family:\00003102}}
+.cke_reset_all select {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* Styles the main interface structure (holding box). */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+mainui.css (part of editor.css)
+=================================
+
+This file styles the basic structure of the CKEditor user interface - the box
+that holds everything.
+
+CKEditor offers two main editing modes. The main UI blocks that compose these
+modes are:
+
+    For "Theme UI" mode, the one most generally used:
+
+    +-- .cke_chrome ----------------------+
+    |+-- .cke_inner ---------------------+|
+    || +-- .cke_top -------------------+ ||
+    || |                               | ||
+    || +-------------------------------+ ||
+    || +-- .cke_contents --------------+ ||
+    || |                               | ||
+    || +-------------------------------+ ||
+    || +-- .cke_bottom ----------------+ ||
+    || |                               | ||
+    || +-------------------------------+ ||
+    |+-----------------------------------+|
+    +-------------------------------------+
+
+    For "Inline Editing" mode:
+
+    +-- .cke_chrome .cke_float------------+
+    |+-- .cke_inner ---------------------+|
+    || +-- .cke_top -------------------+ ||
+    || |                               | ||
+    || +-------------------------------+ ||
+    |+-----------------------------------+|
+    +-------------------------------------+
+
+Special outer level classes used in this file:
+
+    .cke_hc: Available when the editor is rendered on "High Contrast".
+
+*/
+/* The outer boundary of the interface. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000349}}
+.cke_chrome {
+  /* This is <span>, so transform it into a block.*/
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0 3px;
+  background: #eee;
+}
+
+/* The inner boundary of the interface. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000359}}
+.cke_inner {
+  /* This is <span>, so transform it into a block.*/
+  display: block;
+  -webkit-touch-callout: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* Added to the outer boundary of the UI when in inline editing,
+   when the UI is floating. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000371}}
+.cke_float {
+  /* Make white the space between the outer and the inner borders. */
+  border: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000375}}
+.cke_float .cke_inner {
+  /* As we don't have blocks following top (toolbar) we suppress the padding
+     as the toolbar defines its own margin. */
+  padding-bottom: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000381}}
+.cke_float .cke_top {
+  border: 1px solid #ddd;
+}
+
+/* Make the main spaces enlarge to hold potentially floated content. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000387}}
+.cke_top, .cke_contents, .cke_bottom {
+  /* These are <span>s, so transform them into blocks.*/
+  display: block;
+  /* Ideally this should be "auto", but it shows scrollbars in IE7. */
+  overflow: hidden;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\0000395}}
+.cke_top, .cke_bottom {
+  padding: 3px 0 0;
+  background: #eee;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003100}}
+.cke_top {
+  /* Allow breaking toolbars when in a narrow editor. (#9947) */
+  white-space: normal;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003105}}
+.cke_contents {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003111}}
+.cke_bottom {
+  position: relative;
+}
+
+/* On iOS we need to manually enable scrolling in the contents block. (#9945) */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003116}}
+.cke_browser_ios .cke_contents {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* The resizer is the small UI element that is rendered at the bottom right
+   part of the editor. It makes is possible to resize the editor UI. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003123}}
+.cke_resizer {
+  /* To avoid using images for the resizer, we create a small triangle,
+     using some CSS magic. */
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  border-width: 10px 10px 0 0;
+  border-color: transparent #555 transparent transparent;
+  border-style: dashed solid dashed dashed;
+  font-size: 0;
+  vertical-align: bottom;
+  margin-top: 6px;
+  /*  A margin in case of no other element in the same container
+      to keep a distance to the bottom edge. */
+  margin-bottom: 2px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003146}}
+.cke_hc .cke_resizer {
+  font-size: 15px;
+  width: auto;
+  height: auto;
+  border-width: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003153}}
+.cke_resizer_ltr {
+  cursor: se-resize;
+  float: right;
+  margin-right: -4px;
+}
+
+/* This class is added in RTL mode. This is a special case for the resizer
+   (usually the .cke_rtl class is used), because it may not necessarily be in
+   RTL mode if the main UI is RTL. It depends instead on the context where the
+   editor is inserted on. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003164}}
+.cke_resizer_rtl {
+  border-width: 10px 0 0 10px;
+  border-color: transparent transparent transparent #aaa;
+  border-style: dashed dashed dashed solid;
+  cursor: sw-resize;
+  float: left;
+  margin-left: -4px;
+  right: auto;
+}
+
+/* The editing area (where users type) can be rendered as an editable <div>
+   element (e.g. divarea plugin). In that case, this is the class applied to
+   that element. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_mainui\.scss}line{font-family:\00003179}}
+.cke_wysiwyg_div {
+  display: block;
+  height: 100%;
+  overflow: auto;
+  padding: 0 8px;
+  outline-style: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Styles all "panels", which are the floating elements that appear when
+   opening toolbar combos, menu buttons, context menus, etc. */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+panel.css (part of editor.css)
+================================
+
+Panels are floating elements that can hold different types of contents.
+The following are common uses of it:
+
+    - The element that toolbar combos display when opening them.
+    - The context menu.
+    - The list of items displayed by "menu buttons" (e.g. scayt).
+    - The panel shown when opening "panel buttons" (e.g. color buttons).
+
+Panel contents are wrapped into an iframe, so it is possible to have additional
+CSS loaded inside them (e.g. to have more accurate preview on the styles combo).
+
+The following is a visual representation of the outer elements of a panel:
+
++-- .cke_panel(*) ---------------------+
+| +-- IFRAME.cke_panel_frame --------+ |
+| | +-- HTML.cke_panel_container --+ | |
+| | | +-- .cke_panel_block ------+ | | |
+| | | |                          | | | |
+| | | |     (contents here)      | | | |
+| | | |                          | | | |
+| | | +--------------------------+ | | |
+| | +------------------------------+ | |
+| +----------------------------------+ |
++--------------------------------------+
+
+(*) All kinds of panel share the above structure. Menu panels adds the
+    .cke_menu_panel class to the outer element, while toolbar combos add the
+    .cke_combopanel class.
+
+This file also defines styles for panel lists (used by combos). For menu-like
+panel contents and color panels check menu.css and colorpanel.css.
+*/
+/* The box that holds an IFRAME. It's inserted into a host document and positioned
+   absolutely by the application. It floats above the host document/editor. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\0000345}}
+.cke_panel {
+  /* Restore the loading hide */
+  visibility: visible;
+  width: 120px;
+  height: 100px;
+  overflow: hidden;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+/* This class represents panels which are used as context menus. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\0000359}}
+.cke_menu_panel {
+  padding: 0;
+  margin: 0;
+}
+
+/* This class represents panels which are used by rich combos. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\0000365}}
+.cke_combopanel {
+  width: 150px;
+  height: 178px;
+}
+
+/* The IFRAME the panel is wrapped into. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\0000371}}
+.cke_panel_frame {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+/* The HTML document which is a direct descendant of the IFRAME */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\0000381}}
+.cke_panel_container {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/*
+Here we start the definition of panel lists (e.g. combo panels). The following
+is its visual representation:
+
++-- .cke_panel_block -----------------+
+| +-- .cke_panel_grouptitle --------+ |
+| |                                 | |
+| +---------------------------------+ |
+| +-- .cke_panel_list --------------+ |
+| | +-- .cke_panel_listItem ------+ | |
+| | | +-- a --------------------+ | | |
+| | | | +-- span -------------+ | | | |
+| | | | |                     | | | | |
+| | | | +---------------------+ | | | |
+| | | +-------------------------+ | | |
+| | +-----------------------------+ | |
+| | +-- .cke_panel_listItem ------+ | |
+| | | +-- a --------------------+ | | |
+| | | | +-- span -------------+ | | | |
+| | | | |                     | | | | |
+| | | | +---------------------+ | | | |
+| | | +-------------------------+ | | |
+| | +-----------------------------+ | |
+| | ...                             | |
+| +---------------------------------+ |
++-------------------------------------+
+*/
+/* The list of panel items. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003116}}
+.cke_panel_list {
+  list-style-type: none;
+  margin: 3px;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* The item of .cke_panel_list */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003124}}
+.cke_panel_listItem {
+  margin: 0;
+  padding-bottom: 1px;
+}
+
+/* The child of .cke_panel_listItem. These elements contain spans which are
+   to display a real name of the property which is visible for an end-user. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003131}}
+.cke_panel_listItem a {
+  padding: 3px 4px;
+  display: block;
+  border: 1px solid #fff;
+  color: inherit !important;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 2px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003140}}
+.cke_panel_listItem a:hover, .cke_panel_listItem a:focus, .cke_panel_listItem a:active {
+  background-color: #e1edf7;
+}
+
+/* IE6 */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003146}}
+* html .cke_panel_listItem a {
+  width: 100%;
+  /* IE is not able to inherit the color, so we must force it to black */
+  color: #000;
+}
+
+/* IE7 */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003154}}
+*:first-child + html .cke_panel_listItem a {
+  /* IE is not able to inherit the color, so we must force it to black */
+  color: #000;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003159}}
+.cke_panel_listItem.cke_selected a {
+  background-color: #92bce0;
+  outline: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003164}}
+.cke_hc .cke_panel_listItem a {
+  border-style: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003169}}
+.cke_hc .cke_panel_listItem a:hover, .cke_hc .cke_panel_listItem a:focus, .cke_hc .cke_panel_listItem a:active {
+  border: 2px solid;
+  padding: 1px 2px;
+}
+
+/* The title of the entire panel which is visible on top of the list. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003176}}
+.cke_panel_grouptitle {
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  margin: 0;
+  padding: 6px 6px;
+  color: #474747;
+  border-bottom: 1px solid #aaa;
+  background: #eee;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003187}}
+.cke_panel_grouptitle:first-child {
+  border-radius: 4px 4px 0 0;
+}
+
+/* The following styles set defaults of the elements used by the Paragraph
+   Format panel. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_panel\.scss}line{font-family:\00003195}}
+.cke_panel_listItem p, .cke_panel_listItem h1, .cke_panel_listItem h2, .cke_panel_listItem h3, .cke_panel_listItem h4, .cke_panel_listItem h5, .cke_panel_listItem h6, .cke_panel_listItem pre {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+/* Styles the color panel displayed by the color buttons. */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+colorpanel.css (part of editor.css)
+=====================================
+
+The color panel is related to the contents part of the panels that are
+displayed when clicking the color buttons of the toolbar. See panels.css for
+styles related to the outer part of panels.
+
+The following is the visual representation of the color panel contents:
+
++-- .cke_panel_block.cke_colorblock --+
+| +-- a.cke_colorauto --------------+ |
+| |                                 | |
+| |         AUTOMATIC COLOR         | |
+| |                                 | |
+| +---------------------------------+ |
+| +-- table ------------------------+ |
+| |                                 | |
+| |          COLOR PALETTE          | |
+| |                                 | |
+| |---------------------------------| |
+| |          "More Colors"          | |
+| +---------------------------------+ |
++-------------------------------------+
+
+The AUTOMATIC COLOR section is an <a> containing a table with two cells with
+the following contents:
+
++-- TD -----------------+ +-- TD -----------------+
+| +-- .cke_colorbox --+ | |                       |
+| |                   | | |      "Automatic"      |
+| +-------------------+ | |                       |
++-----------------------+ +-----------------------+
+
+The COLOR PALETTE section instead is a table with a variable number of cells
+(by default 8). Each cell represents a color box, with the following structure:
+
++-- A.cke_colorbox ---------+
+| +-- SPAN.cke_colorbox --+ |
+| |                       | |
+| +-----------------------+ |
++---------------------------+
+*/
+/* The container of the color palette. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000351}}
+.cke_colorblock {
+  padding: 3px;
+  font-size: 11px;
+  font-family: 'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000357}}
+.cke_colorblock,
+.cke_colorblock a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* The box which is to represent a single color on the color palette.
+   It is a small, square-shaped element which can be selected from the palette. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000365}}
+span.cke_colorbox {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #aaa;
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000372}}
+.cke_rtl span.cke_colorbox {
+  float: right;
+}
+
+/* The wrapper of the span.cke_colorbox. It provides an extra border and padding. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000377}}
+a.cke_colorbox {
+  border: 1px solid #fff;
+  padding: 2px;
+  float: left;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000386}}
+.cke_rtl a.cke_colorbox {
+  float: right;
+}
+
+/* Different states of the a.cke_colorbox wrapper. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\0000393}}
+a:hover.cke_colorbox, a:focus.cke_colorbox, a:active.cke_colorbox {
+  border: 1px solid #ddd;
+  background-color: #eee;
+}
+
+/* Buttons which are visible at the top/bottom of the color palette:
+   - cke_colorauto (TOP) applies the automatic color.
+   - cke_colormore (BOTTOM) executes the color dialog.
+*/
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\00003104}}
+a.cke_colorauto, a.cke_colormore {
+  border: 1px solid #fff;
+  padding: 2px;
+  display: block;
+  cursor: pointer;
+}
+
+/* Different states of cke_colorauto/cke_colormore buttons. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_colorpanel\.scss}line{font-family:\00003114}}
+a:hover.cke_colorauto, a:hover.cke_colormore, a:focus.cke_colorauto, a:focus.cke_colormore, a:active.cke_colorauto, a:active.cke_colormore {
+  border: 1px solid #ddd;
+  background-color: #eee;
+}
+
+/* Styles to toolbar. */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+toolbar.css (part of editor.css)
+==================================
+
+This files styles the CKEditor toolbar and its buttons. For toolbar combo
+styles, check richcombo.css.
+
+The toolbar is rendered as a big container (called toolbox), which contains
+smaller "toolbars". Each toolbar represents a group of items that cannot be
+separated. The following is the visual representation of the toolbox.
+
++-- .cke_toolbox ----------------------------------------------------------+
+| +-- .cke_toolbar --+ +-- .cke_toolbar --+ ... +-- .cke_toolbar_break --+ |
+| |                  | |                  |     |                        | |
+| +------------------+ +------------------+     +------------------------+ |
+| +-- .cke_toolbar --+ +-- .cke_toolbar --+ ...                            |
+| |                  | |                  |                                |
+| +------------------+ +------------------+                                |
++--------------------------------------------------------------------------+
+
+The following instead is the visual representation of a single toolbar:
+
++-- .cke_toolbar ----------------------------------------------------------------+
+| +-- .cke_toolbar_start --+ +-- .cke_toolgroup (*) --+ +-- .cke_toolbar_end --+ |
+| |                        | |                        | |                      | |
+| +------------------------+ +------------------------+ +----------------------+ |
++--------------------------------------------------------------------------------+
+(*) .cke_toolgroup is available only when the toolbar items can be grouped
+    (buttons). If the items can't be group (combos), this box is not available
+    and the items are rendered straight in that place.
+
+This file also styles toolbar buttons, which are rendered inside the above
+.cke_toolgroup containers. This is the visual representation of a button:
+
++-- .cke_button -------------------------------------+
+| +-- .cke_button_icon --+ +-- .cke_button_label --+ |
+| |                      | |                       | |
+| +----------------------+ +-----------------------+ |
++----------------------------------------------------+
+
+Special outer level classes used in this file:
+
+    .cke_hc: Available when the editor is rendered on "High Contrast".
+    .cke_rtl: Available when the editor UI is on RTL.
+*/
+/* The box that holds each toolbar. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000353}}
+.cke_toolbar {
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000357}}
+.cke_rtl .cke_toolbar {
+  float: right;
+}
+
+/* The box that holds buttons. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000362}}
+.cke_toolgroup {
+  float: left;
+  margin: 0 6px 3px 0;
+  padding: 2px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000373}}
+.cke_hc .cke_toolgroup {
+  border: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000379}}
+.cke_rtl .cke_toolgroup *:first-child {
+  border-radius: 0 4px 4px 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000383}}
+.cke_rtl .cke_toolgroup *:last-child {
+  border-radius: 4px 0 0 4px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000387}}
+.cke_rtl .cke_toolgroup {
+  float: right;
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+/* A toolbar button . */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\0000394}}
+a.cke_button {
+  display: inline-block;
+  height: 18px;
+  padding: 2px 4px;
+  outline: none;
+  cursor: default;
+  float: left;
+  border: 0;
+  border-radius: 2px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003105}}
+.cke_rtl .cke_button {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003109}}
+.cke_hc .cke_button {
+  border: 1px solid black;
+  /* Compensate the added border */
+  padding: 3px 5px;
+  margin: -2px 4px 0 -2px;
+}
+
+/* This class is applied to the button when it is "active" (pushed).
+   This style indicates that the feature associated with the button is active
+   i.e. currently writing in bold or when spell checking is enabled. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003120}}
+.cke_button_on {
+  background: #92bce0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003125}}
+.cke_hc .cke_button_on {
+  border-width: 3px;
+  /* Compensate the border change */
+  padding: 1px 3px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003131}}
+.cke_hc a.cke_button_off:hover, .cke_hc a.cke_button_off:focus, .cke_hc a.cke_button_off:active, .cke_hc a.cke_button_disabled:hover, .cke_hc a.cke_button_disabled:focus, .cke_hc a.cke_button_disabled:active {
+  border-width: 3px;
+  /* Compensate the border change */
+  padding: 1px 3px;
+}
+
+/* This class is applied to the button when the feature associated with the
+   button cannot be used (grayed-out).
+   i.e. paste button remains disabled when there is nothing in the clipboard to
+   be pasted. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003143}}
+.cke_button_disabled .cke_button_icon {
+  opacity: 0.3;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003147}}
+.cke_hc .cke_button_disabled {
+  opacity: 0.5;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003157}}
+a.cke_button_off:hover, a.cke_button_off:focus, a.cke_button_off:active, a.cke_button_disabled:hover, a.cke_button_disabled:focus, a.cke_button_disabled:active {
+  background: #e1edf7;
+}
+
+/* The icon which is a visual representation of the button. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003163}}
+.cke_button_icon {
+  cursor: inherit;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+  width: 16px;
+  height: 16px;
+  float: left;
+  display: inline-block;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003173}}
+.cke_rtl .cke_button_icon {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003177}}
+.cke_hc .cke_button_icon {
+  display: none;
+}
+
+/* The label of the button that stores the name of the feature. By default,
+   labels are invisible. They can be revealed on demand though. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003183}}
+.cke_button_label {
+  display: none;
+  padding-left: 3px;
+  margin-top: 1px;
+  line-height: 18px;
+  vertical-align: middle;
+  float: left;
+  cursor: default;
+  color: #555;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003194}}
+.cke_rtl .cke_button_label {
+  padding-right: 3px;
+  padding-left: 0;
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003200}}
+.cke_hc .cke_button_label {
+  padding: 0;
+  display: inline-block;
+  font-size: 12px;
+}
+
+/* The small arrow available on buttons that can be expanded
+   (e.g. the color buttons). */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003208}}
+.cke_button_arrow {
+  /* Arrow in CSS */
+  display: inline-block;
+  margin: 8px 0 0 1px;
+  width: 0;
+  height: 0;
+  cursor: default;
+  vertical-align: top;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #474747;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003221}}
+.cke_rtl .cke_button_arrow {
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003226}}
+.cke_hc .cke_button_arrow {
+  font-size: 10px;
+  margin: 3px -2px 0 3px;
+  width: auto;
+  border: 0;
+}
+
+/* The vertical separator which is used within a single toolbar to split
+   buttons into sub-groups. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003235}}
+.cke_toolbar_separator {
+  float: left;
+  background-color: #ddd;
+  margin: 4px 2px 0;
+  height: 16px;
+  width: 1px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003243}}
+.cke_rtl .cke_toolbar_separator {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003247}}
+.cke_hc .cke_toolbar_separator {
+  width: 0;
+  border-left: 1px solid;
+  margin: 1px 5px 0 0px;
+}
+
+/* The dummy element that breaks toolbars.
+   Once it is placed, the very next toolbar is moved to the new row. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003255}}
+.cke_toolbar_break {
+  display: block;
+  clear: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003260}}
+.cke_rtl .cke_toolbar_break {
+  clear: right;
+}
+
+/* The button, which when clicked hides (collapses) all the toolbars. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003265}}
+.cke_toolbox_collapser {
+  width: 12px;
+  height: 11px;
+  float: right;
+  margin: 11px 0 0;
+  font-size: 0;
+  cursor: default;
+  text-align: center;
+  border: 1px solid #a6a6a6;
+  border-bottom-color: #979797;
+  border-radius: 4px;
+  background: #e4e4e4;
+  /* The CSS arrow, which belongs to the toolbar collapser. */
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003280}}
+.cke_toolbox_collapser:hover {
+  background: #ccc;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003283}}
+.cke_toolbox_collapser.cke_toolbox_collapser_min {
+  margin: 0 2px 4px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003285}}
+.cke_toolbox_collapser.cke_toolbox_collapser_min .cke_arrow {
+  margin-top: 4px;
+  border-bottom-color: transparent;
+  border-top-color: #474747;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003292}}
+.cke_toolbox_collapser .cke_arrow {
+  display: inline-block;
+  /* Pure CSS Arrow */
+  height: 0;
+  width: 0;
+  font-size: 0;
+  margin-top: 1px;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid #474747;
+  border-top: 3px solid transparent;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003307}}
+.cke_rtl .cke_toolbox_collapser {
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_toolbar\.scss}line{font-family:\00003311}}
+.cke_hc .cke_toolbox_collapser .cke_arrow {
+  font-size: 8px;
+  width: auto;
+  border: 0;
+  margin-top: 0;
+  margin-right: 2px;
+}
+
+/* Styles menus, which are lists of selectable items (context menu, menu button). */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+menu.css (part of editor.css)
+===============================
+
+This file styles menus used in the editor UI. These menus are the list of
+options available inside some "floating panels", like menu buttons of the
+toolbar or the context menu.
+
+Note that the menu itself doesn't include the floating element that holds it.
+That element is styles in the panel.css file.
+
+The following is a visual representation of the main elements of a menu:
+
++-- .cke_menu -----------------+
+| +-- .cke_menuitem  --------+ |
+| | +-- .cke_menubutton ---+ | |
+| | |                      | | |
+| | +----------------------+ | |
+| +--------------------------+ |
+| +-- .cke_menuseparator ----+ |
+| ...                          |
++------------------------------+
+
+This is the .cke_menubutton structure:
+(Note that the menu button icon shares with toolbar button the common class .cke_button_icon to achieve the same outlook.)
+
++-- .cke_menubutton -------------------------------------------------------------------------+
+| +-- .cke_menubutton_inner ---------------------------------------------------------------+ |
+| | +-- .cke_menubutton_icon ---+ +-- .cke_menubutton_label --+ +-- .cke_cke_menuarrow --+ | |
+| | | +-- .cke_button_icon ---+ | |                           | |                        | | |
+| | | |                       | | |                           | |                        | | |
+| | | +-----------------------+ | |                           | |                        | | |
+| | +---------------------------+ +---------------------------+ +------------------------+ | |
+| +----------------------------------------------------------------------------------------+ |
++--------------------------------------------------------------------------------------------+
+
+Special outer level classes used in this file:
+
+    .cke_hc: Available when the editor is rendered on "High Contrast".
+    .cke_rtl: Available when the editor UI is on RTL.
+*/
+/* .cke_menuitem is the element that holds the entire structure of each of the
+   menu items. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000351}}
+.cke_menubutton {
+  /* The "button" inside a menu item is a <a> element.
+     Transforms it into a block. */
+  display: block;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000357}}
+.cke_button_icon {
+  opacity: .8;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000361}}
+.cke_menuitem span {
+  /* Avoid the text selection cursor inside menu items. */
+  cursor: default;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000367}}
+.cke_menubutton:hover, .cke_menubutton:focus, .cke_menubutton:active {
+  background-color: #D3D3D3;
+  display: block;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000373}}
+.cke_hc .cke_menubutton {
+  padding: 2px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000375}}
+.cke_hc .cke_menubutton:hover, .cke_hc .cke_menubutton:focus, .cke_hc .cke_menubutton:active {
+  border: 2px solid;
+  padding: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000381}}
+.cke_menubutton_inner {
+  display: table-row;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000385}}
+.cke_menubutton_icon,
+.cke_menubutton_label,
+.cke_menuarrow {
+  display: table-cell;
+}
+
+/* The menu item icon. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000392}}
+.cke_menubutton_icon {
+  background-color: #D7D8D7;
+  opacity: 0.70;
+  /* Safari, Opera and Mozilla */
+  filter: alpha(opacity=70);
+  /* IE */
+  padding: 4px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\0000399}}
+.cke_hc .cke_menubutton_icon {
+  height: 16px;
+  width: 0;
+  padding: 4px 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003107}}
+.cke_menubutton:hover .cke_menubutton_icon, .cke_menubutton:focus .cke_menubutton_icon, .cke_menubutton:active .cke_menubutton_icon {
+  background-color: #D0D2D0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003115}}
+.cke_menubutton_disabled:hover .cke_menubutton_icon, .cke_menubutton_disabled:focus .cke_menubutton_icon, .cke_menubutton_disabled:active .cke_menubutton_icon {
+  /* The icon will get opacity as well when hovered. */
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+/* The textual part of each menu item. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003124}}
+.cke_menubutton_label {
+  padding: 0 5px;
+  background-color: transparent;
+  width: 100%;
+  vertical-align: middle;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003131}}
+.cke_menubutton_disabled .cke_menubutton_label {
+  /* Greyed label text indicates a disabled menu item. */
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003137}}
+.cke_menubutton_on {
+  border: 1px solid #dedede;
+  background-color: #f2f2f2;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003140}}
+.cke_menubutton_on .cke_menubutton_icon {
+  padding-right: 3px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003146}}
+.cke_menubutton:hover, .cke_menubutton:focus, .cke_menubutton:active {
+  background-color: #EFF0EF;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003151}}
+.cke_panel_frame .cke_menubutton_label {
+  display: none;
+}
+
+/* The separator used to separate menu item groups. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003156}}
+.cke_menuseparator {
+  background-color: #D3D3D3;
+  height: 1px;
+  filter: alpha(opacity=70);
+  /* IE */
+  opacity: 0.70;
+  /* Safari, Opera and Mozilla */
+}
+
+/* The small arrow shown for item with sub-menus. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003164}}
+.cke_menuarrow {
+  background-image: url(images/arrow.png);
+  background-position: 0 10px;
+  background-repeat: no-repeat;
+  padding: 0 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003169}}
+.cke_menuarrow span {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003174}}
+.cke_rtl .cke_menuarrow {
+  background-position: 5px -13px;
+  background-repeat: no-repeat;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_menu\.scss}line{font-family:\00003179}}
+.cke_hc .cke_menuarrow span {
+  vertical-align: middle;
+  display: inline;
+}
+
+/* Styles toolbar combos. */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+richcombo.css (part of editor.css)
+=================================
+
+This file holds the style set of the "Rich Combo" widget which is commonly used
+in the toolbar. It doesn't, however, styles the panel that is displayed when
+clicking on the combo, which is instead styled by panel.css.
+
+The visual representation of a rich combo widget looks as follows:
+
++-- .cke_combo----------------------------------------------------------------------+
+| +-- .cke_combo_label --+ +-- .cke_combo_button ---------------------------------+ |
+| |                      | | +-- .cke_combo_text --+ +-- .cke_combo_open -------+ | |
+| |                      | | |                     | | +-- .cke_combo_arrow --+ | | |
+| |                      | | |                     | | |                      | | | |
+| |                      | | |                     | | +----------------------+ | | |
+| |                      | | +---------------------+ +--------------------------+ | |
+| +----------------------+ +------------------------------------------------------+ |
++-----------------------------------------------------------------------------------+
+*/
+/* The box that hold the entire combo widget */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000328}}
+.cke_combo {
+  display: inline-block;
+  float: left;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000333}}
+.cke_rtl .cke_combo {
+  float: right;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000337}}
+.cke_hc .cke_combo {
+  margin-top: -2px;
+}
+
+/* The label of the combo widget. It is invisible by default, yet
+   it's important for semantics and accessibility. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000343}}
+.cke_combo_label {
+  display: none;
+  float: left;
+  line-height: 26px;
+  vertical-align: top;
+  margin-right: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000351}}
+.cke_rtl .cke_combo_label {
+  float: right;
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+/* The container for combo text and arrow. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000358}}
+.cke_combo_button {
+  display: inline-block;
+  float: left;
+  margin: 0 6px 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* Different states of the container. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000370}}
+.cke_combo_off a.cke_combo_button:hover, .cke_combo_off a.cke_combo_button:focus {
+  outline: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000373}}
+.cke_combo_off a.cke_combo_button:active {
+  border-color: #333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000380}}
+.cke_combo_on a.cke_combo_button {
+  border-color: #333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000385}}
+.cke_rtl .cke_combo_button {
+  float: right;
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000391}}
+.cke_hc a.cke_combo_button {
+  padding: 3px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\0000395}}
+.cke_hc .cke_combo_on a.cke_combo_button {
+  border-width: 3px;
+  padding: 1px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003100}}
+.cke_hc .cke_combo_off a.cke_combo_button:hover, .cke_hc .cke_combo_off a.cke_combo_button:focus, .cke_hc .cke_combo_off a.cke_combo_button:active {
+  border-width: 3px;
+  padding: 1px;
+}
+
+/* The label that shows the current value of the rich combo.
+   By default, it holds the name of the property.
+   See: .cke_combo_inlinelabel */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003109}}
+.cke_combo_text {
+  line-height: 26px;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  float: left;
+  cursor: default;
+  color: #474747;
+  width: 60px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003120}}
+.cke_rtl .cke_combo_text {
+  float: right;
+  text-align: right;
+  padding-left: 0;
+  padding-right: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003127}}
+.cke_hc .cke_combo_text {
+  line-height: 18px;
+  font-size: 12px;
+}
+
+/* The handler which opens the panel of rich combo properties.
+   It holds an arrow as a visual indicator. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003134}}
+.cke_combo_open {
+  cursor: default;
+  display: inline-block;
+  font-size: 0;
+  height: 19px;
+  line-height: 17px;
+  margin: 1px 7px 1px;
+  width: 5px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003144}}
+.cke_hc .cke_combo_open {
+  height: 12px;
+}
+
+/* The arrow which is displayed inside of the .cke_combo_open handler. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003149}}
+.cke_combo_arrow {
+  margin: 11px 0 0;
+  float: left;
+  /* Pure CSS Arrow */
+  height: 0;
+  width: 0;
+  font-size: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003162}}
+.cke_hc .cke_combo_arrow {
+  font-size: 10px;
+  width: auto;
+  border: 0;
+  margin-top: 3px;
+}
+
+/* Disabled combo button styles. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_richcombo\.scss}line{font-family:\00003171}}
+.cke_combo_disabled .cke_combo_inlinelabel, .cke_combo_disabled .cke_combo_open {
+  opacity: 0.3;
+}
+
+/* Styles the elements path bar, available at the bottom of the editor UI.*/
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/*
+elementspath.css (part of editor.css)
+=======================================
+
+This file styles the "Elements Path", whith is the list of element names
+present at the the bottom bar of the CKEditor interface.
+
+The following is a visual representation of its main elements:
+
++-- .cke_path ---------------------------------------------------------------+
+| +-- .cke_path_item ----+ +-- .cke_path_item ----+ +-- .cke_path_empty ---+ |
+| |                      | |                      | |                      | |
+| +----------------------+ +----------------------+ +----------------------+ |
++----------------------------------------------------------------------------+
+*/
+/* The box that holds the entire elements path. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_elementspath\.scss}line{font-family:\0000323}}
+.cke_path {
+  float: left;
+  margin: -2px 0 2px;
+}
+
+/* Each item of the elements path. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_elementspath\.scss}line{font-family:\0000329}}
+.cke_path_item,
+.cke_path_empty {
+  display: inline-block;
+  float: left;
+  padding: 3px 4px;
+  margin-right: 2px;
+  cursor: default;
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+  color: #4c4c4c;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_elementspath\.scss}line{font-family:\0000347}}
+.cke_rtl .cke_path, .cke_rtl .cke_path_item, .cke_rtl .cke_path_empty {
+  float: right;
+}
+
+/* The items are <a> elements, so we define its hover states here. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_elementspath\.scss}line{font-family:\0000354}}
+a.cke_path_item:hover, a.cke_path_item:focus, a.cke_path_item:active {
+  background-color: #bfbfbf;
+  color: #333;
+  border-radius: 2px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_elementspath\.scss}line{font-family:\0000362}}
+.cke_hc a.cke_path_item:hover, .cke_hc a.cke_path_item:focus, .cke_hc a.cke_path_item:active {
+  border: 2px solid;
+  padding: 1px 2px;
+}
+
+/* Contains hard-coded presets for "configurable-like" options of the UI
+   (e.g. display labels on specific buttons) */
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+/* "Source" button label */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_presets\.scss}line{font-family:\000037}}
+.cke_button__source_label,
+.cke_button__sourcedialog_label {
+  display: inline;
+}
+
+/* "Font Size" combo width */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_presets\.scss}line{font-family:\0000313}}
+.cke_combo__fontsize .cke_combo_text {
+  width: 30px;
+}
+
+/* "Font Size" panel size */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_presets\.scss}line{font-family:\0000318}}
+.cke_combopanel__fontsize {
+  width: 120px;
+}
+
+/* Editable regions */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_presets\.scss}line{font-family:\0000323}}
+.cke_source {
+  font-family: 'Courier New' , Monospace;
+  font-size: small;
+  background-color: #fff;
+  white-space: pre;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/_presets\.scss}line{font-family:\0000330}}
+.cke_wysiwyg_frame, .cke_wysiwyg_div {
+  background-color: #fff;
+}
+
+/* Important!
+   To avoid showing the editor UI while its styles are still not available, the
+   editor creates it with visibility:hidden. Here, we restore the UI visibility. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/editor\.scss}line{font-family:\0000352}}
+.cke_chrome {
+  visibility: inherit;
+}
+
+/* For accessibility purposes, several "voice labels" are present in the UI.
+   These are usually <span> elements that show not be visible, but that are
+   used by screen-readers to announce other elements. Here, we hide these
+   <spans>, in fact. */
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/editor\.scss}line{font-family:\0000360}}
+.cke_voice_label {
+  display: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/F\:\/Kate\/work\/\%B2\%FA\%C6\%B7\%B8\%C4\%B0\%E6\/\%D3\%CA\%BC\%FE\%CD\%A8_2015-11-20\/website\/js\/lib\/ckeditor\/skins\/bootstrapck\/scss\/components\/editor\.scss}line{font-family:\0000364}}
+legend.cke_voice_label {
+  display: none;
+}

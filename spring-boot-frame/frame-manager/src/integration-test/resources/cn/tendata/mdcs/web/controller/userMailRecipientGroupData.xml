@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_recipient_groups id="uuid'4b2f02ca-d857-4c95-b7fa-ee6283ce0d64'" name="group1" recipient_count="1"
+                                recipients='[{"fullName":"p1","email":"p1@1.com"},{"fullName":"p2","email":"p2@1.com"}]' disabled_recipients='[{"fullName":"disable3","email":"disable3@1.com"},{"fullName":"disable6","email":"p6@1.com"}]' disabled_recipient_count="2"
+                                created_date="2015-11-15 13:36:28" user_id="1"/>
+    <user_mail_recipient_groups id="uuid'4b2f02ca-d857-4c95-b7fa-ee6283ce0d65'" name="group2" recipient_count="2"
+                                recipients='[{"fullName":"p1","email":"p1@1.com"}]' disabled_recipients='[{"fullName":"disable3","email":"disable3@1.com"},{"fullName":"disable6","email":"p6@1.com"}]' disabled_recipient_count="2"
+                                created_date="2015-11-15 14:36:28" user_id="2"/>
+    <user_mail_recipient_groups id="uuid'4b2f02ca-d857-4c95-b7fa-ee6283ce0d66'" name="group3" recipient_count="3"
+                                recipients='[{"email":"p1@1.com"},{"fullName":"p2","email":"p2@1.com"}]' disabled_recipients='[{"fullName":"disable4","email":"disable4@1.com"},{"fullName":"disable5","email":"p5@1.com"}]' disabled_recipient_count="2"
+                                created_date="2015-11-15 15:36:28" user_id="1"/>
+    <user_mail_recipient_groups id="uuid'4b2f02ca-d857-4c95-b7fa-ee6283ce0d67'" name="group4" recipient_count="4"
+                                recipients='[{"email":"p1@1.com"}]' disabled_recipients='[{"fullName":"disable3","email":"disable3@1.com"},{"fullName":"disable6","email":"p6@1.com"}]' disabled_recipient_count="2"
+                                created_date="2015-11-15 16:36:28" user_id="1"/>
+</dataset>

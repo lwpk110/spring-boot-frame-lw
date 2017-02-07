@@ -1,0 +1,18 @@
+description = "frame-batch"
+
+dependencies {
+
+    compile project(":frame-core")
+
+    compile "org.springframework.integration:spring-integration-core"
+    compile "org.springframework.integration:spring-integration-ftp"
+    compile "org.springframework.integration:spring-integration-sftp"
+    compile "org.springframework.integration:spring-integration-file"
+    compile "org.springframework.integration:spring-integration-test"
+    compile "org.apache.ftpserver:ftpserver-core:${ftpServerVersion}"
+
+    compile "org.springframework.batch:spring-batch-core"
+    compile "org.springframework.batch:spring-batch-test:${batchTestVersion}"
+
+    testCompile "org.springframework:spring-test"
+}

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_mail_recipient_groups name="mailsou recipients group" recipient_count="2" 
+        recipients='[{"email":"test1@tendata.cn"},{"email":"test2@tendata.cn"}]' user_id="1"/>
+</dataset>

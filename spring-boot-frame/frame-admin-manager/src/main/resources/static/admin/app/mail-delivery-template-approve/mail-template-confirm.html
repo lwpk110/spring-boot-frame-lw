@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="close();"><span
+            aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">审核确认</h4>
+</div>
+<div class="modal-body">
+    <div style="margin-top: 20px">
+        <span style="color:gray; font-size: 16pt">是否确认审核此模板</span>
+    </div>
+
+    <div style="margin-top: 20px">
+        <button style="width: 60px" type="button" class="btn btn-default"
+                ng-controller="MailDeliveryTemplateApproveCtrl" ng-click="enterBtn()">确认
+        </button>
+        <button style="margin-left: 22px; width: 60px" type="button" class="btn btn-default"
+                ng-controller="MailDeliveryTemplateApproveCtrl" ng-click="closeConfirmView()">取消
+        </button>
+    </div>
+</div>

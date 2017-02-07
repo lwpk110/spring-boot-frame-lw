@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <user_transaction_details id="1" transaction_type="DEPOSIT" credits="100" comment="人工充值" user_id="1" />
+    <user_transaction_details id="2" transaction_type="DEPOSIT" credits="50" user_id="1" />
+</dataset>

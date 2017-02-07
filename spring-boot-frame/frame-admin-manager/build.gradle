@@ -1,0 +1,23 @@
+description = 'frame-admin-manager'
+
+dependencies {
+    compile project(':frame-core')
+    compile project(':frame-batch')
+    compile "org.springframework:spring-webmvc"
+    compile "org.springframework.security:spring-security-core"
+    compile "org.springframework.security:spring-security-config"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "javax.servlet:javax.servlet-api"
+    compile "commons-io:commons-io"
+
+    testCompile "org.springframework:spring-test"
+    testCompile "org.mockito:mockito-core"
+    testCompile "org.hamcrest:hamcrest-all"
+    integrationTestCompile "org.springframework.security:spring-security-test"
+    integrationTestCompile "org.dbunit:dbunit:${dbunitVersion}"
+    integrationTestCompile "com.github.springtestdbunit:spring-test-dbunit:${springtestdbunitVersion}"
+    integrationTestCompile "com.jayway.jsonpath:json-path:${jsonPathVersion}"
+    integrationTestCompile "com.jayway.jsonpath:json-path-assert:${jsonPathVersion}"
+    integrationTestCompile "javax.servlet:jstl"
+    integrationTestCompile "org.glassfish:javax.el:${elVersion}"
+}

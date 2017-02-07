@@ -1,0 +1,112 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>我的账户</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>我的账户</span>
+        </div>
+    </div>
+
+    <div class="row dott-money-wapper">
+        <div class="col-xs-8">
+            <div class="row">
+                <div class="col-xs-3 rest-dott">
+                    <p class="dott-money-tit">剩余点数</p>
+                    <p class="dott-money-detail">
+                        <span class="dott-money-dott" th:text="${user.balance}">47321</span>
+                        点</p>
+                </div>
+                <div class="col-xs-9 dott-money-buy">
+                    <button class="clear-defult-appear blue-button button-size-big border-rd-5 margin-t-20 margin-r-20"
+                            th:attr="onclick='window.open(\'__@{/user/account/deposit}__\',\'_self\')'">购 买
+                    </button>
+
+                    <button class="clear-defult-appear blue-button button-size-big border-rd-5 margin-t-20"
+                       th:if="${loginUser.parentUserId == 0}"     th:attr="onclick='window.open(\'__@{/user/account/child_users}__\',\'_self\')'">点数分配
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-2 total-buy">
+            <p class="dott-money-tit">总计购买</p>
+            <p class="dott-money-detail">
+                <span class="dott-money-dott" th:text="${user.totalDeposit}">193621</span>
+                点</p>
+        </div>
+
+        <div class="col-xs-2 total-shop">
+            <p class="dott-money-tit">总计消费</p>
+            <p class="dott-money-detail">
+                <span class="dott-money-dott" th:text="${user.getTotalCost()}">146300</span>
+                点</p>
+        </div>
+    </div>
+
+    <div class="row web-tit-row margin-t-30">
+        <div class="web-tit-name">
+            <i></i><span>最近记录</span>
+        </div>
+        <div class="float-r">
+            <a class="underline" th:href="@{/user/account/deposits}">
+                全部记录
+                <i class="fa fa-chevron-right margin-l-5 account-blue-font">
+                </i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row margin-t-10">
+        <!--无数据提示-->
+        <div class="search-result-empyt" th:if="${userTransactionDetails.size()}==0">
+            <i class="fa fa-frown-o"></i>
+            <p>你还没有交易记录~</p>
+        </div>
+
+        <!--有数据显示表格-->
+        <div class="search-data-show" th:if="${userTransactionDetails.size()}>0">
+            <table cellpadding="0" cellspacing="0" border="0" class="email-tong-table email-tong-thl recipients-table"
+                   id="recent-buy-record">
+                <thead>
+                <tr role="row">
+                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 180px;">时 间</th>
+                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 179px;">类 型</th>
+                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 179px;">点 数</th>
+                    <th class="sorting_disabled " rowspan="1" colspan="1" style="width: 378px;">备 注</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="detail,iterStat : ${userTransactionDetails}" th:class="${iterStat.odd}? 'odd'">
+                    <td><p class="v-left">
+                        <span th:text="${#calendars.format(detail.createdDate,'yyyy-MM-dd')}">2015-08-04</span>
+                        <span class='grey-font' th:text="${#calendars.format(detail.createdDate,'HH:mm:ss')}">11:20</span>
+                    </p></td>
+                    <td th:switch="${detail.transactionType}+''">
+                        <p th:case="'DEPOSIT'" th:text="购买">购买</p>
+                        <p th:case="'BALANCE_ASSIGN'" th:text="分配">分配</p>
+                        <p th:case="'SEND'" th:text="发送任务">发送任务</p>
+                        <p th:case="'SEND_CANCEL'" th:text="取消任务">取消任务</p>
+                    </td>
+                    <td><p th:text="${detail.credits}">+2000123</p></td>
+                    <td>
+                        <p class="tr-singal-line" th:text="${detail.comment}">
+                            任务名称：博登强化地板广交会——加拿大AND俄罗斯
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->
+</div>
+</body>
+</html>

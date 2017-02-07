@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <mail_delivery_channels id="1" name="channel1" fee="1" max_num_limit="5000" disabled="0" sequence="0" version="0" />
+    <mail_delivery_channels id="2" name="channel2" fee="1" max_num_limit="5000" disabled="1" sequence="0" version="0" />
+    <mail_delivery_channels id="3" name="channel3" fee="1" max_num_limit="5000" disabled="0" sequence="1" version="0" />
+</dataset>

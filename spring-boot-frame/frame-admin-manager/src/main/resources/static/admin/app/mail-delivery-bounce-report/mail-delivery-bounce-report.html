@@ -1,0 +1,135 @@
+<div class="row">
+	<div class="col-md-4 ">
+		<ul class="breadcrumb">
+			<li><i class="fa fa-home"></i><a ng-href="#/dashboard">首页</a></li>
+			<li class="active">退信记录</li>
+		</ul>
+	</div>
+</div>
+
+<div class="content">
+	<div class="main-header">
+		<h2>退信记录</h2>
+		<em>退信记录查询</em>
+	</div>
+	<div class="main-content">
+
+		<!------------------------- bounce-report  ------------------------>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="widget widget-focus-enabled">
+					<div class="loading-backdrop" ng-show="loadDivVisible">
+						<!--[if !(IE)|IE 9]><!-->
+						<i class="fa fa-spinner fa-3x fa-fw circle" loading></i> <font
+							class="loading-text">数据加载中...</font>
+						<!--<![endif]-->
+						<!--[if IE 8]>
+	           	 		<font class="loading-text">
+	           	 			数据加载中...
+	           	 		</font>
+	           	 		<![endif]-->
+					</div>
+					<div class="widget-header">
+						<h3>
+							<i class="fa fa-table"></i> 退信记录列表
+						</h3>
+					</div>
+					<div class="widget-content" id="collapseOne">
+						<div class="dataTable_wrapper">
+
+							<form class="form-inline form" ng-submit="search()"
+								style="float: left">
+
+								<!-- 域名地址：@<input type="text" class="form-control" id="searchFilter" placeholder="请输入后缀" ng-model="searchValue" ng-show="searchFrameVisible"> -->
+
+								<span class="input-group" ng-controller="DatePickerCtrl">
+									<input type="text" class="form-control"
+									uib-datepicker-popup="{{format}}" ng-model="dt.startDate"
+									is-open="status.opened" datepicker-options="dateOptions"
+									close-text="{{closeText}}" current-text="{{currentText}}"
+									clear-text="{{clearText}}" show-weeks="false"
+									ng-readonly="true" placeHolder="开始时间" date-time> <span
+									class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+								</span>
+								</span> <span class="input-group" ng-controller="DatePickerCtrl">
+									<input type="text" class="form-control"
+									uib-datepicker-popup="{{format}}" ng-model="dt.endDate"
+									is-open="status.opened" datepicker-options="dateOptions"
+									close-text="{{closeText}}" current-text="{{currentText}}"
+									clear-text="{{clearText}}" show-weeks="false"
+									ng-readonly="true" placeHolder="结束时间" date-time> <span
+									class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+								</span>
+								</span>
+								<!--<![endif]-->
+
+								<button type="submit" class="btn btn-default"
+									ng-disabled="searchForm.$invalid">查询</button>
+								<br />
+								<br />
+
+							</form>
+
+							<table class="table table-striped table-bordered table-hover">
+
+								<thead>
+									<tr>
+										<th>域名地址</th>
+										<!-- <th>发送次数</th> -->
+										<th>硬退</th>
+										<th>软退</th>
+										<th>退信率</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr ng-if="!reports">
+										<td colspan="7">暂无数据显示</td>
+									</tr>
+									<tr ng-repeat="rpt in reports">
+										<td>{{rpt.recipientsMailSuffix}}</td>
+										<!-- <td>{{rpt.total}}</td> -->
+										<td>{{rpt.hardBounce}}</td>
+										<td>{{rpt.softBounce}}</td>
+										<td>{{rpt.bounceRate}}%</td>
+										<td><span ng-controller="ModalAlertCtrl">
+												<button class="btn btn-custom-secondary btn-xs btn-gritter"
+													uib-tooltip="查看退信记录"
+													ng-click="gotoBounceRecord(rpt.recipientsMailSuffix)">
+													查看退信记录
+													<!-- <i class="fa fa-plus-square-o"></i> -->
+												</button>
+
+										</span></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div style="text-align: right;"></div>
+							<span> 每页显示10条 ,共{{totalItems}}条,当前第{{currentPageNum}}页 </span>
+							<div style="text-align: right;">
+								<button class="btn btn-default"
+									ng-click="gotoPageUpAndDown('up')">上一页</button>
+								<button class="btn btn-default"
+									ng-click="gotoPageUpAndDown('down')">下一页</button>
+								<br />
+								<br />
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!------------------------- end bounce-report ------------------------>
+
+		</div>
+	</div>

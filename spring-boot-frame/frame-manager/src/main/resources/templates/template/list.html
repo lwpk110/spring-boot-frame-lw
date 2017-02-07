@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<!-- InstanceBegin template="/Templates/Sentset_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>邮件模板</title>
+</head>
+
+<body>
+
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>邮件模板</span>
+        </div>
+        <div class="web-tit-button">
+            <button class="button-size-big blue-button border-rd-5" onclick="window.open('template/add','_self')">
+                创建模板
+            </button>
+        </div>
+    </div>
+
+    <div class="row margin-t-10">
+        <!--有数据显示表格-->
+        <div class="search-data-show">
+            <table cellpadding="0" cellspacing="0" border="0" class="email-tong-table email-tong-thl"
+                   id="email_temp_record"></table>
+        </div>
+
+    </div>
+    <!-- InstanceEndEditable -->
+</div>
+
+<!-- InstanceBeginEditable name="Script_Area" -->
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_template})"></script>
+</th:block>
+<!-- InstanceEndEditable -->
+
+</body>
+<!-- InstanceEnd --></html>

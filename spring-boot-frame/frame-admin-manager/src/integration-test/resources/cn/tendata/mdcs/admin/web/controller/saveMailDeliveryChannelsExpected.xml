@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <mail_delivery_channels id="1" version="0" description="test delivery channel" disabled="true"
+    	fee="3" max_num_limit="233" name="test1" sequence="0"/>
+</dataset>

@@ -1,0 +1,175 @@
+<div class="row">
+    <div class="col-md-4 ">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#/dashboard">首页</a></li>
+            <li class="active">任务记录</li>
+        </ul>
+    </div>
+</div>
+
+<div class="content">
+    <div class="main-header">
+        <h2>任务</h2>
+        <em>任务记录</em>
+    </div>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="widget widget-focus-enabled">
+                	<div class="loading-backdrop" ng-show="loadDivVisible">
+	           	 		<!--[if !(IE)|IE 9]><!-->
+	           	 		<i class="fa fa-spinner fa-3x fa-fw circle" loading></i>
+	           	 		<font class="loading-text">数据加载中...</font>
+	           	 		<!--<![endif]-->
+	           	 		<!--[if IE 8]>
+	           	 		<font class="loading-text">
+	           	 			数据加载中...
+	           	 		</font>
+	           	 		<![endif]--> 
+	           	 	</div>
+                    <div class="widget-header">
+                        <h3><i class="fa fa-table"></i> 任务列表</h3>
+                    </div>
+                    <div class="widget-content" id="collapseOne">
+                        <div class="dataTable_wrapper">
+
+                            <form class="form-inline form" ng-submit="search()" name="searchForm">
+                                <select ng-class="form-control"
+                                        ng-options="option.name for option in filterOptions.availableOptions track by option.value"
+                                        ng-model="filterOptions.selectedOption"
+                                        ng-click="changeFilter()"></select>
+                                <input type="{{filter.type}}"
+                                       class="form-control"
+                                       placeholder="{{filter.placeholder}}"
+                                       ng-pattern="filter.pattern"
+                                       ng-model="keyword">
+                                <!--[if IE 8]>
+                                <input type="date"
+                                       class="form-control"
+                                       placeholder="开始时间"
+                                       ng-model="startDate">
+                                <input type="date"
+                                       class="form-control"
+                                       placeholder="结束时间"
+                                       ng-model="endDate"> 
+                                <![endif]--> 
+                                
+                                <!--[if (gte IE 9)|!(IE)]><!-->
+                                <span class="input-group" ng-controller="DatePickerCtrl">
+          							<input 	type="text"
+          									class="form-control" 
+          									uib-datepicker-popup="{{format2}}" 
+          									ng-model="dt.startDate"
+          									is-open="status.opened" 
+          									datepicker-options="dateOptions"
+          									placeholder="开始时间"
+          									close-text="{{closeText}}"
+          									clear-text="{{clearText}}"
+          									current-text="{{currentText}}"
+          									ng-readonly="true"
+          									show-weeks="false"
+          									date-time >
+	          						<span class="input-group-btn">
+	            						<button type="button" class="btn btn-default" ng-click="open()">
+	            							<i class="glyphicon glyphicon-calendar"></i>
+	            						</button>
+	          						</span>
+        						</span>
+                               	<span class="input-group" ng-controller="DatePickerCtrl">
+          							<input 	type="text"
+          									class="form-control" 
+          									uib-datepicker-popup="{{format2}}" 
+          									ng-model="dt.endDate"
+          									is-open="status.opened" 
+          									placeholder="结束时间"
+          									datepicker-options="dateOptions"
+          									close-text="{{closeText}}"
+          									clear-text="{{clearText}}"
+          									current-text="{{currentText}}"
+          									show-weeks="false" 
+          									ng-readonly="true"
+          									date-time >
+	          						<span class="input-group-btn">
+	            						<button type="button" class="btn btn-default" ng-click="open()">
+	            							<i class="glyphicon glyphicon-calendar"></i>
+	            						</button>
+	          						</span>
+        						</span>
+        						<!--<![endif]-->
+        						
+                                <button type="submit" class="btn btn-default" ng-disabled="searchForm.$invalid">搜索</button>
+                            </form>
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">创建时间</th>
+                                    <th class="col-md-4">任务名称</th>
+                                    <th class="col-md-1">用户名</th>
+                                    <th class="col-md-1">状态</th>
+                                    <th class="col-md-1">通道</th>
+                                    <th class="col-md-1">消费点数</th>
+                                    <th class="col-md-2">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-if="!items || items.length == 0">
+                                    <td colspan="7">暂无数据显示</td>
+                                </tr>
+                                <tr ng-repeat="item in items">
+                                    <td>{{item.createdDate | date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td>{{item.name}}<input type="hidden" value="{{item.id}}"></td>
+                                    <td>{{item.user.username}}</td>
+                                    <td>{{statusTranslator(item.deliveryStatus)}}</td>
+                                    <td>{{item.deliveryChannel.name}}</td>
+                                    <td>{{item.totalFee}}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs btn-gritter"
+                                                uib-tooltip="任务模板"
+                                                ng-click="openTemplate(item.id);">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-xs btn-gritter"
+                                                uib-tooltip="任务报告"
+                                                ng-show="{{reportShow(item)}}"
+                                                ng-controller="MailDeliveryTaskReportCtrl"
+                                                ng-click="openReport(item.id);">
+                                            <i class="fa fa-bar-chart"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-xs btn-gritter"
+                                                uib-tooltip="定时发送：{{item.scheduledDate | date:'yyyy-MM-dd HH:mm'}}"
+                                                ng-show="{{clockShow(item)}}">
+                                            <i class="fa fa-clock-o"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="margin-top:-30px;height:50px;float:right;">
+                                <uib-pagination
+                                        total-items="totalItems"
+                                        ng-model="currentPage"
+                                        max-size="maxSize"
+                                        class="pagination-sm"
+                                        boundary-links="true"
+                                        rotate="true"
+                                        num-pages="numPages"
+                                        items-per-page="itemsPerPage"
+                                        first-text="首页"
+                                        previous-text="上一页"
+                                        next-text="下一页"
+                                        last-text="末页"
+                                        ng-change="pageChanged()">
+                                </uib-pagination>
+                            </div>
+
+                            <span>
+                                当前  {{currentPage}} / {{numPages}} 页   &nbsp;&nbsp;共 {{totalItems}} 条
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

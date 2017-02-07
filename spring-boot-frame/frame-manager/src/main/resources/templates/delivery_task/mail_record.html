@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>邮箱记录</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>邮箱记录</span>
+            </div>
+            <div class="web-tit-button">
+                <button class="button-size-big blue-button border-rd-5" th:attr="onclick='window.open(\'__@{/user/delivery_task}__\',\'_self\')'">
+                    <i class="fa fa-chevron-left"></i>任务管理
+                </button>
+            </div>
+        </div>
+
+        <div class="row tit-search-area margin-b-10">
+            <div class="tit-search-col margin-r-20">
+                <input type="text" class="input-size-normal clear-defult grey-border border-rd-3" placeholder="请输入完整邮箱地址" id="email">
+            </div>
+
+            <div class="tit-search-col margin-r-20">
+                <button class="button-size-small blue-button border-rd-5">
+                    <i class="fa fa-search"></i>查询
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--未输入邮箱地址-->
+            <div class="search-result-empyt" id="mailValueEmpty">
+                <i class="fa fa-history"></i>
+                <p>请输入邮箱查询发送历史~</p>
+            </div>
+
+            <!--无数据提示-->
+            <div class="search-result-empyt hidden-item" id="emptyResult">
+                <i class="fa fa-frown-o"></i>
+                <p>没有查到邮箱记录~</p>
+            </div>
+            <!--有数据显示表格-->
+            <div class="search-data-show">
+                <table cellpadding="0" cellspacing="0" border="0" class="email-tong-table email-tong-thl" id="email_history_record"></table>
+            </div>
+        </div>
+        <!-- InstanceEndEditable -->
+</div>
+
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_delivery_task_record})"></script>
+</th:block>
+</body>
+</html>

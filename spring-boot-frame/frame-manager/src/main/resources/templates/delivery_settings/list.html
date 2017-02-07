@@ -1,0 +1,210 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+
+<!-- InstanceBegin template="/Templates/Sentset_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8">
+    <title>发件人设置</title>
+</head>
+<body >
+<article class="main">
+<div class="container main-content" layout:fragment="content">
+    <!-- InstanceBeginEditable name="Main_Area" -->
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>发件人设置</span>
+        </div>
+        <div class="web-tit-button">
+            <button class="button-size-big blue-button border-rd-5" id="add_sender">
+                添加发件人
+            </button>
+        </div>
+    </div>
+
+    <div class="row margin-t-10">
+        <!--没有发件人时-->
+        <div class="search-result-empyt hidden-item" th:if="${#lists.isEmpty(deliverySettings)}">
+            <i class="fa fa-frown-o"></i>
+
+            <p>你还没有设置发件人~</p>
+        </div>
+
+        <!--有数据显示表格-->
+        <div class="search-data-show" th:if=" not ${#lists.isEmpty(deliverySettings)}">
+            <table border="0" cellpadding="0" cellspacing="0" class="email-tong-table sentset-table" width="100%"
+                   id="sentset_table">
+                <thead>
+                <tr>
+                    <th width="10%">默认使用</th>
+                    <th width="25%">发信昵称</th>
+                    <th width="25%">收信邮箱</th>
+                    <th width="25%">发信邮箱</th>
+                    <th width="15%"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="delivery : ${deliverySettings}" th:switch="${delivery.checked}"  th:id="${delivery.id}">
+                    <td th:case="true">
+                        <i class="fa fa-check-circle default-senter" title="选择默认发件人"></i>
+                    </td>
+                    <td th:case="false">
+                        <i class="fa fa-check-circle defaultDelivery" title="选择默认发件人"></i>
+                    </td>
+                    <td th:text="${delivery.deliverySettings.senderName}"></td>
+                    <td th:text="${delivery.deliverySettings.replyEmail}"></td>
+                    <td th:if="${delivery.deliverySettings.agentSend == true}" th:text="虚拟邮箱"></td>
+                    <td th:if="${delivery.deliverySettings.agentSend == false}" th:text="${delivery.deliverySettings.senderEmail}"></td>
+                 </td>
+                    <td>
+                        <div class="col-xs-6 td-action v-middle">
+                            <i class="fa fa-pencil-square"  title="编辑"></i>
+                        </div>
+                        <div class="col-xs-6 td-action v-middle hidden-item">
+                            <i class="fa fa-trash"   title="删除"></i>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- InstanceBeginEditable name="dialogArea" -->
+    <div id="sentset_Dialog" style="display:none;"></div>
+    <!-- InstanceEndEditable -->
+
+    <script th:id="delete_content" type="text/x-handlebars-template" th:inline="javascript">
+        <p class="grey-font">{{warning}}</p>
+        <p class="error margin-t-40">{{signal}}</p>
+    </script>
+
+    <script th:id="alert_dialog_content" type="text/x-handlebars-template" th:inline="javascript">
+        <p class="error margin-t-20">{{signal}}</p>
+    </script>
+
+    <script th:id="editor_content" type="text/x-handlebars-template" th:inline="javascript">
+        <div class="container-fluid">
+            <div class="row margin-t-10">
+                <div class="col-xs-2 senter-tit">发信昵称</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="你发出的所有邮件中，发件人将显示的昵称"
+                           id="nickName" name="nickName"
+                           value="{{senderName}}"/>
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="nickName_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+            <div class="row margin-t-20" id="sendEmail_wapper">
+                <div class="col-xs-2 senter-tit">发信邮箱</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="请填写虚拟邮箱，没有虚拟邮箱请开启发送优化"
+                           id="sendEmail" name="sendEmail"
+                           value="{{senderEmail}}"/>
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="sendEmail_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+            <div class="row margin-t-20" id="replyEmail_wapper">
+                <div class="col-xs-2 senter-tit">收信邮箱</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="对方收到你的邮件后，回复给你的邮箱地址"
+                           id="achievEmail" name="achievEmail"
+                           value="{{replyEmail}}"/>
+
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="achievEmail_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <!-- InstanceBeginEditable name="Script_Area" -->
+    <script th:id="add_content" type="text/x-handlebars-template" >
+        <div class="container-fluid">
+            <div class="row margin-t-20">
+                <div class="col-xs-offset-2 col-xs-7">
+                    <ul class="email-type" id="choose_type">
+                        <li class="border-rd-3 margin-r-10 active">
+                            <i class="fa fa-check-circle margin-r-5"></i>
+                            <span>使用虚拟发信邮箱</span>
+                        </li>
+                        <li class="border-rd-3">
+                            <i class="fa fa-check-circle margin-r-5"></i>
+                            <span>使用自定义发信邮箱</span>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="hidden_defaultSendBox"  value="1">
+                </div>
+                <div class="col-xs-3 email-explain">
+                    <span class="lookout" id="explain_text">什么是虚拟发信邮箱?</span>
+                </div>
+            </div>
+            <div class="row margin-t-40">
+                <div class="col-xs-2 senter-tit">发信昵称</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="你发出的所有邮件中，发件人将显示的昵称"
+                           id="nickname" name="nickname"/>
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="nickname_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+            <div class="row margin-t-20 hidden-item" id="sendEmail_wapper">
+                <div class="col-xs-2 senter-tit">发信邮箱</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="你的邮箱账号，例如：yunyoutong@tendata.com"
+                           id="sendEmail" name="sendEmail"/>
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="sendEmail_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+            <div class="row margin-t-20">
+                <div class="col-xs-2 senter-tit">收信邮箱</div>
+                <div class="col-xs-7">
+                    <input type="text"
+                           class="input-size-big border-rd-3 grey-border"
+                           placeholder="你的邮箱账号，例如：yunyoutong@tendata.com"
+                           id="achiveEmail" name="achiveEmail"/>
+                </div>
+                <div class="col-xs-3 error senter-singal hidden-item" id="achiveEmail_singal">
+                    <i class="fa fa-exclamation-triangle error"></i><span class="error"></span>
+                </div>
+            </div>
+
+            <div class="explain-wapper hidden-item" id="explain_wapper">
+                <img src="../img/setSender_arrow.jpg" alt="">
+                <p class="border-rd-5">
+                    虚拟发信邮箱是系统模拟的虚拟发件人。使用虚拟发信邮箱能保护你的个人邮箱不会因为群发邮件而进入黑名单，并能有效降低退信率，不会影响你收到客户的回信
+                </p>
+            </div>
+        </div>
+    </script>
+    </div>
+</article>
+<!-- InstanceBeginEditable name="Script_Area" -->
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_delivery_settings})"></script>
+</th:block>
+<!-- InstanceEndEditable -->
+
+</body>
+
+<!-- InstanceEnd --></html>

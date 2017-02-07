@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeReport();"><span
+            aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">任务报告</h4>
+</div>
+<div class="modal-body">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>总数</th>
+            <th>成功</th>
+            <th>未打开</th>
+            <th>总打开</th>
+            <th>净打开</th>
+            <th>总点击</th>
+            <th>净点击</th>
+            <th>软退</th>
+            <th>硬退</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{report.sent}}</td>
+            <td>{{report.sent - report.hardBounce - report.softBounce}}</td>
+            <td>{{report.sent - report.hardBounce - report.softBounce - report.uniqueOpenCount}}</td>
+            <td>{{report.openCount}}</td>
+            <td>{{report.uniqueOpenCount}}</td>
+            <td>{{report.allClicked}}</td>
+            <td>{{report.mailClicked}}</td>
+            <td>{{report.softBounce}}</td>
+            <td>{{report.hardBounce}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

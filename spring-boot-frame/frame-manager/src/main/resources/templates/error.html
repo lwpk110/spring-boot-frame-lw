@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/base">
+<head>
+    <meta charset="utf-8">
+    <title>出错啦！</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <div class="container404 rel">
+        <div class="max-w tc fix row">
+            <div class="col-xs-6 text-align-md">
+                <img th:if="${status == 404}" th:src="@{/img/404icon.png}" height="357" width="418" alt=""
+                     class="l mt30 ml30">
+                <img th:if="${status == 500}" th:src="@{/img/500icon.png}" height="357" width="418" alt=""
+                     class="l mt30 ml30">
+                <img th:if="${status == 403}" th:src="@{/img/403icon.png}" width="368" height="362" class="ml30 mt30">
+            </div>
+
+            <div class="l tips-404  ml30 tl col-xs-6">
+                <img th:if="${status == 404}" th:src="@{/img/404-tip.png}" height="81" width="334" alt=""
+                     class="mt30 mb30">
+                <img th:if="${status == 500}" th:src="@{/img/500-tip.png}" height="81" width="334" alt=""
+                     class="mt30 mb30">
+                <img th:if="${status == 403}" th:src="@{/img/403-tip.png}" height="81" width="334" alt=""
+                     class="mt30 mb30">
+
+                <div class="tl time-reword" th:if="${status == 404}">
+                    页面没有找到,将会在<span id="time-set">3</span> 秒钟之后，带您进入导航页面
+                </div>
+                <div class="tl time-reword" th:if="${status == 500}">
+                    服务器出错,将会在<span id="time-set">3</span> 秒钟之后，带您进入导航页面
+                </div>
+                <div class="tl time-reword mt10" th:if="${status == 403}">
+                    请联系销售人员，或直接 <a target="_blank" href="http://www.tendata.cn/contact.html">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="scripts">
+    <script type="text/javascript" th:src="@{/js/lib/jquery-1.8.3.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        if ($("#time-set").length > 0) {
+            var m = parseInt($("#time-set").text());
+
+            function timeout() {
+                if (m >= 1) {
+                    $("#time-set").text(m);
+                    setTimeout('timeout()', 1000);
+                    --m;
+                } else {
+                    window.location.href = /*[[@{__${LINK_ACCOUNTS_ROOT}__/user/index}]]*/;
+                }
+            }
+
+            timeout();
+        }
+    </script>
+</th:block>
+</body>
+</html>

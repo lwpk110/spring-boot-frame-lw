@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.github.divinespear:jpa-schema-gradle-plugin:0.1.+"
+        classpath "org.springframework:spring-aspects:+"
+        classpath "mysql:mysql-connector-java:+"
+    }
+}
+
+apply plugin: io.github.divinespear.JpaSchemaGeneratePlugin
+
+sourceSets {
+    main {
+        resources {
+            srcDir file("${projectDir}/jpa-schema/resources")
+        }
+        output.resourcesDir  output.classesDir
+    }
+}
+
+generateSchema {
+    scriptAction = 'drop-and-create'
+    namingStrategy = 'cn.tendata.mdcs.data.jpa.config.CustomNamingStrategy'
+    format = true
+    
+    targets {
+//        hsqldb {
+//            jdbcDriver = 'org.hsqldb.jdbcDriver'
+//            jdbcUrl = "jdbc:hsqldb:${buildDir}/db/test;shutdown=true"
+//            jdbcUser = 'sa'
+//            dialect = 'org.hibernate.dialect.HSQLDialect'
+//        }
+        mysql5 {
+            jdbcDriver = 'com.mysql.jdbc.Driver'
+            jdbcUrl = 'jdbc:mysql://localhost:3306/tendata_mdcs'
+            jdbcUser = 'root'
+            dialect = 'org.hibernate.dialect.MySQL5Dialect'
+        }
+    }
+}

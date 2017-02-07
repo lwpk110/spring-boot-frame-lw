@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/layout">
+
+<head>
+    <meta charset="utf-8">
+    <title>购买点数成功</title>
+</head>
+
+<body>
+    <div class="container main-content" layout:fragment="content">
+        <!-- InstanceBeginEditable name="Main_Area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>购买点数</span>
+            </div>
+        </div>
+        <div class="mask-sent-status-wapper">
+            <p class="submit-status">
+                <i class="fa fa-check-circle margin-r-10"></i> 购买成功
+            </p>
+
+            <p class="submit-signal margin-t-25">
+                点数购买成功，并已存入到“我的账户”中。
+            </p>
+
+            <p class="margin-t-25">
+                <a class="underline" th:href="@{/user/account/}">查询剩余点数</a>
+            </p>
+
+            <div class="row margin-t-50">
+                <button class="clear-defult-appear border-rd-5 blue-button button-size-max" th:attr="onclick='window.open(\'__@{/user/delivery_task/add}__\',\'_self\')'">
+                    创建任务
+                </button>
+            </div>
+
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</body>
+
+</html>

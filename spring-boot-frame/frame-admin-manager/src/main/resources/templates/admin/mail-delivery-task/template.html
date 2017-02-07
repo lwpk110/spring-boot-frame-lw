@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="zh-CN" class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if !(IE)]><!-->
+<html lang="zh-CN" class="no-js"
+		xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<title th:text=${taskTemplate.subject}></title>
+</head>
+<body th:utext=${taskTemplate.body}>
+</body>
+</html>

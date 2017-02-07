@@ -1,0 +1,162 @@
+<div class="row">
+	<div class="col-md-4 ">
+		<ul class="breadcrumb">
+			<li><i class="fa fa-home"></i><a href="#/dashboard">首页</a></li>
+			<li class="active">{{headerTitle}}</li>
+		</ul>
+	</div>
+</div>
+
+<div class="content">
+	<div class="main-header">
+		<h2>交易</h2>
+		<em>{{headerTitle}}</em>
+	</div>
+	<div class="main-content">
+	
+    
+    <!------------------------- transactions list ------------------------>
+    
+	<div class="row">
+        <div class="col-lg-12">
+        	<div class="widget widget-focus-enabled">
+            	<div class="widget-header">
+                 	<h3><i class="fa fa-table"></i> 交易详情</h3>
+                </div>
+                <div class="widget-content" id="collapseOne">
+                    <div class="dataTable_wrapper">
+                    	
+                    	<form class="form-inline form" ng-submit="search()" name="searchForm">
+                    	 	<select ng-class="form-control" 
+                    	 			ng-options="option.name for option in searchOptionsData.availableOptions track by option.value" 
+                    	 			ng-model="searchOptionsData.selectedOption"
+                    	 			ng-click="changeSearchFrame()" ></select>
+						  	
+						  	<input 	type="{{filter.type}}" 
+						  			class="form-control" 
+						  			placeholder="{{filter.placeholder}}" 
+						  			ng-model="searchValue" >
+						  	
+						  	<!--[if (gte IE 9)|!(IE)]><!-->
+						  	<span class="input-group" ng-controller="DatePickerCtrl">
+								<input type="text" 
+			              			class="form-control" 
+			              			uib-datepicker-popup="{{format}}" 
+			              			ng-model="dt.startDate" 
+			              			is-open="status.opened" 
+			              			datepicker-options="dateOptions" 
+			              			close-text="{{closeText}}" 
+			              			current-text="{{currentText}}" 
+			              			clear-text="{{clearText}}"
+			              			show-weeks="false"
+			              			ng-readonly="true"
+			              			placeHolder="开始时间"
+			              			date-time >
+			              		<span class="input-group-btn">
+            						<button type="button" class="btn btn-default" ng-click="open()">
+            							<i class="glyphicon glyphicon-calendar"></i>
+            						</button>
+          						</span>
+			            	</span>
+			            	<span class="input-group" ng-controller="DatePickerCtrl">
+								<input type="text" 
+			              			class="form-control" 
+			              			uib-datepicker-popup="{{format}}" 
+			              			ng-model="dt.endDate" 
+			              			is-open="status.opened" 
+			              			datepicker-options="dateOptions" 
+			              			close-text="{{closeText}}" 
+			              			current-text="{{currentText}}" 
+			              			clear-text="{{clearText}}"
+			              			show-weeks="false" 
+			              			ng-readonly="true"
+			              			placeHolder="结束时间"
+			              			date-time >
+			              		<span class="input-group-btn">
+            						<button type="button" class="btn btn-default" ng-click="open()">
+            							<i class="glyphicon glyphicon-calendar"></i>
+            						</button>
+          						</span>
+			            	</span>
+			            	<!--<![endif]-->
+			            	
+			            	<!--[if IE 8]>
+			            	<span ng-show="timeFrameVisible">
+							  	<span class="input-group" >
+									<input type="text" 
+				              			class="form-control" 
+				              			ng-model="dt.startDate"
+				              			placeHolder="开始时间" 
+				              			date-time >
+				            	</span>
+				            	<span class="input-group" >
+									<input type="text" 
+				              			class="form-control"  
+				              			ng-model="dt.endDate"
+				              			placeHolder="结束时间" 
+				              			date-time >
+				            	</span>
+			            	</span>
+			            	<![endif]--> 
+						 	<button type="submit" class="btn btn-default" ng-disabled="searchForm.$invalid">搜索</button>
+						</form>
+                       	<table class="table table-striped table-bordered table-hover" >
+                           	<thead>
+                               	<tr>
+                               		<th class="col-md-1">ID</th>
+                               		<th class="col-md-2">用户名</th>
+                               		<th class="col-md-1">点数</th>
+                                   	<th class="col-md-2">交易时间</th>
+                                   	<th class="col-md-1">交易类型</th>
+                                   	<th class="col-md-4">说明</th>
+                               	</tr>
+                       		</thead>
+                       		<tbody>
+	                       		<tr ng-if="!items || items.length == 0">
+	                       			<td colspan="7">暂无数据显示</td>
+	                       		</tr>
+                       			<tr ng-repeat="item in items">
+                       				<td>{{item.id}}</td>
+                       				<td>{{item.user.username}}</td>
+                       				<td>{{item.credits}}</td>
+                       				<td>{{item.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                       				<td>{{item.transactionType | transactionTypeFilter}}</td>
+                       				<td>{{item.comment}}</td>
+                       			</tr>
+                       		</tbody>
+                        </table>
+                        
+                        <div style="margin-top:-30px;height:50px;float:right;">
+							<uib-pagination 
+								total-items="totalItems" 
+								ng-model="currentPage" 
+								max-size="maxSize" 
+								class="pagination-sm" 
+								boundary-links="true" 
+								rotate="true" 
+								num-pages="numPages"
+								items-per-page="itemsPerPage"
+								first-text="首页"
+								previous-text="上一页"
+								next-text="下一页"
+								last-text="末页"
+								ng-change="pageChanged()">
+							</uib-pagination>
+						</div>
+						
+						<span>
+                        	 当前  {{currentPage}} / {{numPages}} 页   &nbsp;&nbsp;  
+                        	每页显示 <select ng-options="option.name for option in pageOptionsData.availableOptions track by option.value" 
+                    	 		ng-model="pageOptionsData.selectedOption" ng-change="changeShowSize()"></select> 条 | 
+                    	 	共 {{totalItems}} 条
+                        </span>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+	<!------------------------- end transactions list ------------------------>
+	
+	
+</div>
+            

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie ie9" lang="zh-CN" class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if !(IE)]><!-->
+<html lang="zh-CN" class="no-js"
+		xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!--<![endif]-->
+
+
+<head>
+	<title>云邮通 | 腾道后台管理平台</title>
+	<meta charset="utf-8">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> -->
+	<meta http-equiv="X-UA-Compatible" content="IE=8">
+	<meta name="description" content="Tendata - Bootstrap Admin Dashboard Theme">
+	<meta name="author" content="Tendata Develovers">
+	
+	<!-- CSS -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/main.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/my-custom-styles.css" rel="stylesheet" type="text/css">
+
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	
+	<script type="text/javascript">
+    	var url = location.pathname;
+    	if (url.lastIndexOf('/') != (url.length - 1)) {
+    		location.href = url + '/';
+    	}
+    </script>
+
+	<!--[if lte IE 9]>
+		<link href="assets/css/main-ie.css" rel="stylesheet" type="text/css"/>
+		<link href="assets/css/main-ie-part2.css" rel="stylesheet" type="text/css"/>
+		<script src="assets/js/html5-ie9.js"></script>
+	<![endif]-->
+
+	<!--[if lte IE 8]>
+		<script src="assets/js/ie8/respond.min.js"></script>
+        <script src="assets/js/ie8/es5-shim.min.js"></script>
+        <script src="assets/js/ie8/IE8.js"></script> 
+        <script type="text/javascript">
+        	document.createElement('uib-pagination');
+        	document.createElement('uib-alert');
+        	document.createElement('toggle-switch');
+        </script>
+    <![endif]-->
+    
+	<!-- CSS for style switcher. -->
+	<link href="assets/js/style-switcher/assets/css/style-switcher.css" rel="stylesheet" type="text/css">
+	
+	<!-- angular toggle-switch css -->
+	<link href="assets/css/angular-toggle-switch-bootstrap.css" rel="stylesheet" type="text/css">
+
+	<!-- jquery & plugins -->
+	<!-- <script src="assets/js/jquery/jquery.min.js"></script> -->
+	<script src="assets/js/ie8/jquery.min.js"></script>
+	
+	<script src="assets/js/bootstrap/bootstrap.js"></script>
+	<script src="assets/js/plugins/modernizr/modernizr.js"></script>
+	<script src="assets/js/plugins/bootstrap-tour/bootstrap-tour.custom.js"></script>
+	<script src="assets/js/king-common.min.js"></script>
+	<script src="assets/js/style-switcher/assets/js/deliswitch.js"></script>
+
+	<!-- angularjs related -->
+	<!-- <script src="assets/js/angular/angular-1.4.8.min.js"></script> -->
+	<script src="assets/js/ie8/angular-1.4.min.js"></script> 
+	<script src="assets/js/angular/i18n/angular-locale_zh-cn.js"></script>
+	<script src="assets/js/angular/angular-route.min.js"></script>
+    <script src="assets/js/angular/ui-bootstrap-tpls-1.1.1.js"></script> 
+    <script src="assets/js/angular/angular-cookies.min.js"></script>
+    <script src="assets/js/angular/angular-toggle-switch.min.js"></script>
+    <script src="assets/js/angular/angular-animate.min.js"></script>
+    	
+	<!-- angularjs app -->
+	<script src="app/app.js"></script>
+	<script src="app/app-menu.js"></script>
+	<script src="app/dashboard/dashboard.js"></script>
+	<script src="app/user/users.js"></script>
+	<script src="app/app-config.js"></script>
+	<script src="app/app-widget.js"></script>
+	<script src="app/app-validator.js"></script>
+	<script src="app/mail-delivery-channel/channels.js"></script>
+	<script src="app/mail-delivery-channel/node/nodes.js"></script>
+	<script src="app/user/user-transcations.js"></script>
+	<script src="app/mail-delivery-task/mail-delivery-task.js"></script>
+	<script src="app/mail-delivery-task/mail-delivery-task-report.js"></script>
+	<script src="app/user/user.deposit.edit.external.js"></script>
+	<script src="app/mail-delivery-template-approve/mail-template-approve.js"></script>
+	<script src="app/system-template/system-template.js"></script>
+	
+	<script src="app/mail-delivery-bounce-report/mail-delivery-bounce-report.js"></script>
+	<script src="app/mail-delivery-bounce-report/bounce/bounce.js"></script>
+	<script src="app/mail-tools/mail-tools.js"></script>
+	<script src="assets/js/date.format.js"></script>
+	
+</head>
+
+<body class="dashboard" ng-app="app" ng-controller="InitCtrl">
+	<!-- WRAPPER -->
+	<div class="wrapper">
+		<!-- TOP BAR -->
+		<div class="top-bar">
+			<div class="container">
+				<div class="row">
+					
+					<!-- logo -->
+					<div class="col-md-2 logo" style="height:30px;top:5px;">
+						<a href="javascript:;">
+							<img src="images/k-logo-white.png" alt="Tendata - KingAdmin Admin Dashboard" style="height:23px;margin-top:-2px;"/>
+						</a>
+					</div>
+					<!-- end logo -->
+
+					<div class="col-md-10">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="top-bar-right">
+									<!-- responsive menu bar icon -->
+									<a href="javascript:;" class="hidden-md hidden-lg main-nav-toggle"><i class="fa fa-bars"></i></a>
+									
+									<!-- logged user and the menu -->
+									<div class="logged-user">
+										<div class="btn-group">
+											<a href="javascript:;" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+												<span class="name" th:text="${#authentication.name}"></span> <span class="caret"></span>
+											</a>
+											<ul class="dropdown-menu" role="menu" style="left: -90px;">
+												<li>
+													<a href="/logout">
+														<i class="fa fa-power-off"></i>
+														<span class="text">Logout</span>
+													</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<!-- end logged user and the menu -->
+								</div>
+								<!-- /top-bar-right -->
+							</div>
+						</div>
+						<!-- /row -->
+					</div>
+
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /top -->
+		<!-- BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+		<div class="bottom">
+			<div class="container">
+				<div class="row">
+					<!-- left sidebar -->
+					<div class="col-md-2 left-sidebar" ng-controller="MenuCtrl">
+
+						<!-- 左侧menu -->
+			            <nav class="main-nav">
+			            	<ul class="main-menu" id="side-menu" >
+			                    <li ng-repeat="datalist in datalists" ng-click="select(datalist)" ng-class="{active: isActive(datalist)}" >
+									<a class="js-sub-menu-toggle" style="cursor:pointer" 
+									   	 ng-click="toggleSec(this)">
+								   		<i class="fa {{datalist.menuIcon}} fa-fw"></i> 
+								   		<span class="text">{{datalist.name}}
+									   		<span ng-if="datalist.children">
+									   			<span class="toggle-icon fa fa-angle-down"></span>
+									   		</span>
+								   		</span>
+									</a>
+									<span ng-if="datalist.children" ng-show="secMenuToggle[datalist.childrenSign]">
+				                        <ul class="sub-menu open">
+											 <li ng-repeat="secChild in datalist.children" ng-click="select(secChild)" ng-class="{active: isSecActive(secChild)}">
+												 <a >
+													 <span class="text">{{secChild.name}}</span>
+												 </a>
+											 </li>
+										</ul>
+			                        </span>
+								</li>
+			                </ul>
+			            </nav>
+						
+						<!-- /main-nav -->
+						<!-- <div class="sidebar-minified js-toggle-minified">
+							<i class="fa fa-angle-left" ng-click="toggleMinified()" title="缩放菜单"></i>
+						</div> -->
+						
+					</div>
+					<!-- end left sidebar -->
+				
+					<!-- content-wrapper -->
+					<div class="col-md-10 content-wrapper">
+						
+						<div ng-view></div>
+
+					</div>
+					<!-- /content-wrapper -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- END BOTTOM: LEFT NAV AND RIGHT MAIN CONTENT -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- STYLE SWITCHER -->
+	<div class="del-style-switcher">
+		<div class="del-switcher-toggle toggle-hide" title="皮肤设置"></div>
+		<form>
+			<section class="del-section del-section-skin">
+				<h5 class="del-switcher-header">选择皮肤:</h5>
+	
+				<ul>
+					<li><a href="javascript:;" title="石板灰" class="switch-skin slategray" data-skin="assets/css/skins/slategray.css">石板灰</a></li>
+					<li><a href="javascript:;" title="深蓝" class="switch-skin darkblue" data-skin="assets/css/skins/darkblue.css">深蓝</a></li>
+					<li><a href="javascript:;" title="深灰" class="switch-skin darkbrown" data-skin="assets/css/skins/darkbrown.css">深灰</a></li>
+					<li><a href="javascript:;" title="浅绿" class="switch-skin lightgreen" data-skin="assets/css/skins/lightgreen.css">浅绿</a></li>
+					<li><a href="javascript:;" title="橙色" class="switch-skin orange" data-skin="assets/css/skins/orange.css">橙色</a></li>
+					<li><a href="javascript:;" title="红色" class="switch-skin red" data-skin="assets/css/skins/red.css">红色</a></li>
+					<li><a href="javascript:;" title="蓝绿色" class="switch-skin teal" data-skin="assets/css/skins/teal.css">蓝绿色</a></li>
+					<li><a href="javascript:;" title="黄色" class="switch-skin yellow" data-skin="assets/css/skins/yellow.css">黄色</a></li>
+				</ul>
+	
+				<button type="button" class="switch-skin-full fulldark" data-skin="assets/css/skins/fulldark.css">全暗</button>
+				<button type="button" class="switch-skin-full fullbright" data-skin="assets/css/skins/fullbright.css">全白</button>
+			</section>
+			<label class="fancy-checkbox"><input type="checkbox" id="fixed-top-nav"><span>导航栏置顶</span></label>
+			<p><a href="javascript:;" title="重置默认样式" class="del-reset-style">重置默认皮肤</a></p>
+		</form>
+	</div>
+	<!-- END STYLE SWITCHER -->
+
+	<div ng-controller="AlertCtrl" style="position:fixed;z-index:1001;width:60%;right:10%;top:50px;">
+	
+	  <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert> 
+	  
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<head>
+    <meta charset="utf-8">
+    <title>流水记录</title>
+</head>
+<body>
+<div class="container main-content" layout:fragment="content">
+    <div class="row web-tit-row">
+        <div class="web-tit-name">
+            <i></i><span>流水记录</span>
+        </div>
+    </div>
+
+    <div class="row tit-search-area margin-b-10">
+        <div class="term-list-wapper">
+            <ul>
+                <li class="term-act">全部时间</li>
+                <li>最近7天</li>
+                <li>最近30天</li>
+            </ul>
+        </div>
+        <div class="tit-search-col margin-r-20">
+            <input type="text"
+                   class="input-size-small clear-defult grey-border border-rd-3 input-calendar input-bule-color"
+                   value="自定义查询时间段" id="buyrecord_calendar">
+            <input class="hidden-item" id="startDate">
+            <input class="hidden-item" id="endDate">
+        </div>
+
+        <div class="tit-search-col margin-r-20">
+            <button class="button-size-small blue-button border-rd-5" id="search">
+                <i class="fa fa-search"></i>查询
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <!--有数据显示表格-->
+        <div class="search-data-show">
+            <table cellpadding="0" cellspacing="0" border="0" class="email-tong-table email-tong-thl"
+                   id="buy-record-detail"></table>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->
+</div>
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/account_deposits})"></script>
+</th:block>
+</body>
+</html>

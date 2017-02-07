@@ -1,0 +1,179 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/layout">
+<!-- InstanceBegin template="/Templates/Recipients_Frame.dwt" codeOutsideHTMLIsLocked="false" -->
+
+<head>
+    <meta charset="utf-8">
+    <title>添加收件人</title>
+</head>
+
+<body>
+
+<!----article---->
+<article class="main">
+        <div class="container main-content" layout:fragment="content">
+        <!-- InstanceBeginEditable name="Main_area" -->
+        <div class="row web-tit-row">
+            <div class="web-tit-name">
+                <i></i><span>添加收件人</span>
+            </div>
+        </div>
+
+        <div class="row add-user-wapper">
+            <div class="row margin-t-25">
+                <div class="col-xs-2 recipients-name">添加方式</div>
+                <div class="col-xs-10 add-type-list">
+                    <ul>
+                        <li class="active">
+                            <a th:href="@{/user/recipient_group/add?type=upload}"  class="a-block"><i class="fa fa-cloud-upload"></i>文件上传</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/user/recipient_group/add?type=input}" class="a-block"><i class="fa fa-pencil"></i>文本输入</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <form th:action="@{/user/recipient_group/add}" method="post" id="sureUpload">
+                <div class="row margin-t-25">
+                    <div class="col-xs-2 recipients-name">收件组名称</div>
+                    <div class="col-xs-10">
+                        <input class="clear-defult-appear input-size-max grey-border border-rd-5" type="text"
+                               placeholder="请输入2~100个字符" maxlength="99" id="creat_recipient_name" name="name">
+                    </div>
+                </div>
+
+                <!--未选择csv文件前-->
+                <div class="not-choose-csv margin-t-30" id="not_choose_rec">
+                    <div class="row">
+                        <div class="col-xs-10 col-xs-offset-2">
+                            <div class="row lookout choose-warning-pre">
+                                <i class="fa fa-lightbulb-o lookout"></i>
+                                添加方式仅支持 CSV 格式文档上传，一次上传收件人数量不能超过5000个,文件不能超过 1MB。
+                            </div>
+
+                            <div class="row choose-exp-img margin-t-5">
+                                <img th:src="@{/img/choose_csv_img.png}" alt="">
+                            </div>
+
+                            <div class="row choose-signal-word margin-t-10">
+                                <p>1. 打开 EXCEL 输入格式如上图，一行一个收件人；</p>
+
+                                <p>2. A列输入邮箱地址，B列输入姓名（没有姓名可不用输入）；</p>
+
+                                <p>3. 点击“另存为”，选择→其他格式→类型：CSV(逗号分隔)(*.csv)；</p>
+
+                                <p>4. 点击“保存”后文件即准备完成；</p>
+
+                                <p>5. 推荐使用UTF-8编码的CSV文件。</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--选择csv文件但校验有错-->
+                <div class="row choose-csv-error margin-t-30 hidden-item" id="choose_rec_haserror">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <p  class="lookout verifying">正在验证收件人 ,请稍等...</p>
+                        <p  class="grey-font verify-total">您已提交收件人 <span class="lookout" id="totalNumber">500</span> 个, 其中 ：</p>
+                        <ul class="recipient" id="recipient">
+                            <li>
+                                <h1>
+                                    <i class="fa fa-exclamation-circle" ></i>格式错误的收件人
+                                </h1>
+                                <span class="recipient-loading">
+                                    <img th:src="@{/img/recipient_loading.gif}" width="17px;" height="15px;">
+                                </span>
+                                <span class="recipient-detail">
+                                <h2><span id="invalidRecordsNumber">50</span>个</h2>
+                                <h3>
+                                    <i class="fa fa-eye invalidRecordsNumber"></i>
+                                </h3>
+                                </span>
+                            </li>
+                            <li>
+                                <h1>
+                                    <i class="fa fa-exclamation-circle" ></i>不存在收件人
+                                </h1>
+
+                                <span class="recipient-loading">
+                                    <img th:src="@{/img/recipient_loading.gif}" width="17px;" height="15px;">
+                                </span>
+
+                                <span class="recipient-detail">
+                                <h2><span id="notExistNumber">50</span>个</h2>
+                                <h3>
+                                    <i class="fa fa-eye notExistNumber"></i>
+                                </h3>
+                                </span>
+                            </li>
+                            <li>
+                                <h1>
+                                    <i class="fa fa-exclamation-circle"></i>重复的收件人
+                                </h1>
+                                <span class="recipient-loading">
+                                    <img th:src="@{/img/recipient_loading.gif}" width="17px;" height="15px;">
+                                </span>
+                                <span class="recipient-detail">
+                                <h2><span id="repeatNumber">50</span>个</h2>
+                                </span>
+                            </li>
+                        </ul>
+
+
+                        <p  id="verify-valid" class="grey-font">本次可上传有效收件人 <span class="lookout" id="validRecordsSize">390</span>
+                            个。</p>
+                    </div>
+                </div>
+
+                <!--按钮区-->
+                <!--选择CSV文件按钮-->
+                <div class="row margin-t-30" id="choose_rec_button">
+                    <div class="col-xs-offset-2 float-l choose-csv-buttonwapper margin-r-15">
+                        <input type="file" name="file" id="file">
+                        <button class="clear-defult-appear button-size-max blue-button border-rd-5 margin-r-40">
+                            选择CSV文件
+                        </button>
+                        <button class="clear-defult-appear button-size-max blue-button border-rd-5 hidden-item" type="submit"
+                                         id="sureUploadAgainBtn">
+                        <i class="fa fa-cloud-upload"></i>确定上传
+                    </button>
+                    </div>
+                </div>
+
+                <!--确定上传按钮-->
+                <div class="row margin-t-30 hidden-item" id="upload_rec_button">
+                    <div class="col-xs-offset-2 float-l  margin-r-30" id="choose_rec_again_button">
+                        <div class="float-l choose-csv-buttonwapper margin-r-15">
+                            <input type="file" name="file" id="fileAgain">
+                            <button class="clear-defult-appear button-size-max blue-button border-rd-5">
+                                重新选择文件
+                            </button>
+                        </div>
+                    </div>
+                    <div class="float-l">
+                        <button class="clear-defult-appear button-size-max blue-button border-rd-5" type="submit"
+                                id="sureUploadBtn">
+                            <i class="fa fa-cloud-upload"></i>确定上传
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        <!-- InstanceEndEditable -->
+    </div>
+</article>
+
+<!-- InstanceBeginEditable name="Script_area" -->
+<th:block layout:fragment="scripts">
+    <script th:replace="taglibs :: script (url=@{/js/mail_recipient_group_edit})"></script>
+</th:block>
+<!-- InstanceEndEditable -->
+
+</body>
+<!-- InstanceEnd --></html>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <users id="1" username="aaa" login_count="0" balance="0" total_cost="0" total_deposit="0" version="0"/>
+    <users id="2" username="bbb" login_count="0" balance="0" total_cost="0" total_deposit="0" version="0"/>
+    <users id="3" username="ccc" login_count="0" balance="0" total_cost="0" total_deposit="0" version="0"/>
+</dataset>
